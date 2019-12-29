@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::resource('threads', 'ThreadController');
+Route::post('/threads/{thread}/replies/', 'ReplyController@store')->name('replies.store');

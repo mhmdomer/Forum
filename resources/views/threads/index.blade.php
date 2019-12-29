@@ -20,6 +20,11 @@
                     @endforeach
                 </div>
             </div>
+            @if(Auth::guest())
+                <div class="pt-4">
+                    <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to create Threads</p>
+                </div>
+            @endif
         </div>
     </div>
 </div>

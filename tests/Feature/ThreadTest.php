@@ -8,11 +8,10 @@ use Tests\TestCase;
 class ThreadTest extends TestCase
 {
 
-    use RefreshDatabase;
-
     public function setUp() :void {
         parent::setUp();
-        $this->thread = factory('App\Thread')->create();
+        $this->withoutExceptionHandling();
+        $this->thread = create('App\Thread');
     }
 
     /** @test */
@@ -28,7 +27,7 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function user_can_see_thread_replies() {
-        $reply = factory('App\Reply')->create(['thread_id' => $this->thread->id]);
+        $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
         $this->get('/threads/' . $this->thread->id)->assertSee($reply->body);
 
     }

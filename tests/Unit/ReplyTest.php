@@ -8,11 +8,10 @@ use Tests\TestCase;
 class ReplyTest extends TestCase
 {
 
-    use RefreshDatabase;
-
     public function setUp() :void {
         parent::setUp();
-        $this->reply = factory('App\Reply')->create();
+        $this->withoutExceptionHandling();
+        $this->reply = create('App\Reply');
     }
 
     /** @test */
