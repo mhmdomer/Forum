@@ -13,12 +13,17 @@
             </div>
         </div>
         <h3 class="mt-2">Replies:</h3>
-        <div class="card card-body">
-            @foreach ($thread->replies as $reply)
-                <p>{{ $reply->body }}</p>
+        @foreach ($thread->replies as $reply)
+            <div class="card m-3">
+                <div class="card-header">
+                    <p> <a href="#">{{ $reply->user->name }}</a> {{ $reply->created_at->diffForHumans() }}</p>
+                </div>
+                <div class="card-body">
+                    <p>{{ $reply->body }}</p>
+                </div>
                 <hr>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 </div>
 
