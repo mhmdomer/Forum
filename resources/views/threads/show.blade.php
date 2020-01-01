@@ -6,7 +6,7 @@
     <div class="col-md-8 offset-md-2">
         <div class="card">
             <div class="card-header">
-                <a href="#">{{ $thread->user->name }}</a> posted: {{ $thread->title }}
+                <a href="#">{{ $thread->user->name }}</a> posted: {{ $thread->title }} <span>{{ $thread->created_at->diffForHumans() }}</span>
             </div>
             <div class="card-body">
                 {{ $thread->body }}
@@ -17,7 +17,7 @@
             @include('partials.reply')
         @endforeach
         @if(auth()->check())
-            <form method="POST" action="{{ route('replies.store', $thread->id) }}" class="mt-4">
+            <form method="POST" action="{{ url($thread->path() . '/replies') }}" class="mt-4">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <textarea type="date" rows="4" class="form-control" name="body" placeholder="Have something to say ?"></textarea>

@@ -11,7 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $threads = factory('App\Thread', 10)->create();
+        $channels = factory('App\Channel', 4)->create();
+        $channels->each(function($channel) {
+            factory('App\Thread', 3)->create(['channel_id' => $channel->id]);
+        });
+        $threads = App\Thread::all();
         $threads->each(function($thread) {
             factory('App\Reply', 6)->create(['thread_id' => $thread->id]);
         });

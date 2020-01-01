@@ -7,14 +7,13 @@
         <div class="col-md-8 offset-md-2">
             <div class="card">
                 <div class="card-body">
-                    <h3>Forum Threads</h3>
+                    <h3>{{ $channel->name }} Threads</h3>
                     <hr>
                     @foreach ($threads as $thread)
                         <article>
                             <a class='' href="{{ url($thread->path()) }}" style="text-decoration: none">
                                 <h3>{{ $thread->title }}</h3>
                             </a>
-                            <span>{{ $thread->created_at->diffForHumans() }}</span>
                             <p>{{ $thread->body }}</p>
                         </article>
                         <hr>
