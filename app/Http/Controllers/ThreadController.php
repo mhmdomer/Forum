@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 class ThreadController extends Controller
 {
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -23,7 +24,7 @@ class ThreadController extends Controller
     public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
-        if($channel->exists) {
+        if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
         }
         $threads = $threads->get();

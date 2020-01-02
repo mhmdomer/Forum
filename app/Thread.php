@@ -8,23 +8,28 @@ class Thread extends Model
 {
     protected $guarded = [];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
-    public function replies() {
+    public function replies()
+    {
         return $this->hasMany('App\Reply');
     }
 
-    public function path() {
+    public function path()
+    {
         return 'threads/' . $this->channel->slug . '/' . $this->id;
     }
 
-    public function channel() {
+    public function channel()
+    {
         return $this->belongsTo('App\Channel');
     }
 
-    public function scopeFilter($query, $filters) {
+    public function scopeFilter($query, $filters)
+    {
         return $filters->apply($query);
     }
 }
