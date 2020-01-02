@@ -33,8 +33,8 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function user_can_filter_threads_by_channel() {
+        $this->withoutExceptionHandling();
         $channel = create('App\Channel');
-        // dd($channel);
         $threadInChannel = create('App\Thread', ['channel_id' => $channel->id]);
         $threadNotInChannel = create('App\Thread');
         $this->get('/threads/' . $channel->slug)

@@ -38,7 +38,7 @@
                                 Browse
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="nav-link" href="{{ route('threads.index') }}">All Threads</a>
+                                <a class="nav-link" href="{{ route('threads.index', '') }}">All Threads</a>
                                 @if (auth()->check())
                                     <a class="nav-link" href="{{ url('threads?by=' . auth()->user()->name) }}">My Threads</a>
                                 @endif
@@ -53,7 +53,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 @foreach ($channels as $channel)
-                                    <a class="dropdown-item" href="{{ route('channels.show', $channel->slug) }}">{{ $channel->name }}</a>
+                                    <a class="dropdown-item" href="{{ route('threads.index', $channel->slug) }}">{{ $channel->name }}</a>
                                 @endforeach
                             </div>
                         </li>
