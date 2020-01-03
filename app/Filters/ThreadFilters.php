@@ -6,11 +6,17 @@ namespace App\Filters;
 class ThreadFilters extends Filters
 {
 
-    public $filters = ['by'];
+    public $filters = ['by', 'popular'];
 
     public function by($name)
     {
         $user = \App\User::where('name', $name)->firstOrFail();
         $this->builder->where('user_id', $user->id);
+    }
+
+    public function popular($popular) {
+        // clear up the default orders and order by popularity
+        $this->builder->getQuery()->orders = [];
+        return $this->builder->orderBy('replies_count', 'desc');
     }
 }

@@ -40,7 +40,7 @@
             <div class="card">
                 <div class="card-body">
                     <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="#">{{ $thread->user->name }}</a> and 
-                    it has {{ $thread->replies()->count() }} {{ str_plural('reply', $thread->replies()->count()) }}
+                    it has {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}
                     </p>
                 </div>
             </div>

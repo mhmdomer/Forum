@@ -11,9 +11,12 @@
                     <hr>
                     @foreach ($threads as $thread)
                         <article>
-                            <a class='' href="{{ url($thread->path()) }}" style="text-decoration: none">
-                                <h3>{{ $thread->title }}</h3>
-                            </a>
+                            <div style="display: flex; justify-content:center;">
+                                <a style="flex:1;" class='' href="{{ url($thread->path()) }}" style="text-decoration: none">
+                                    <h3>{{ $thread->title }}</h3>
+                                </a>
+                                <a href="{{ url($thread->path()) }}"><strong>{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</strong></a>
+                            </div>
                             <span>{{ $thread->created_at->diffForHumans() }}</span>
                             <p>{{ $thread->body }}</p>
                         </article>
