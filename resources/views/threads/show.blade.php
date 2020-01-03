@@ -7,16 +7,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <a href="#">{{ $thread->user->name }}</a> posted: {{ $thread->title }} <span>{{ $thread->created_at->diffForHumans() }}</span>
+                    <a href="#">{{ $thread->user->name }}</a> posted: {{ $thread->title }}
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}
                 </div>
             </div>
             <h4 class="mt-4">Replies:</h4>
-            @foreach ($thread->replies->reverse() as $reply)
+            @foreach ($replies as $reply)
                 @include('partials.reply')
             @endforeach
+            <div class="mt-2">
+                {{ $replies->links() }}
+            </div>
             @if(auth()->check())
                 <form method="POST" action="{{ url($thread->path() . '/replies') }}" class="mt-4">
                     {{ csrf_field() }}
@@ -36,7 +39,9 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <p>This thread is published by <a href="#">{{ $thread->user }}</a> and </p>
+                    <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="#">{{ $thread->user->name }}</a> and 
+                    it has {{ $thread->replies()->count() }} {{ str_plural('reply', $thread->replies()->count()) }}
+                    </p>
                 </div>
             </div>
         </div>
