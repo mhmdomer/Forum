@@ -41,4 +41,8 @@ class Thread extends Model
     {
         return $filters->apply($query);
     }
+
+    public function favorites() {
+        return $this->morphMany(Favorite::class, 'favorited');
+    }
 }

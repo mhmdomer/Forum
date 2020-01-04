@@ -10,11 +10,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('threads/create', 'ThreadController@create')->name('threads.create');
-Route::get('threads', 'ThreadController@index')->name('threads.index');
-Route::get('threads/{channel}', 'ThreadController@index')->name('threads.index');
-Route::post('threads/', 'ThreadController@store')->name('threads.store');
-Route::get('threads/{channel}/{thread}', 'ThreadController@show')->name('threads.show');
-Route::post('/threads/{channel}/{thread}/replies/', 'ReplyController@store')->name('replies.store');
-// Route::get('/threads/{channel}', 'ChannelController@show')->name('channels.show')->where(['channel' => '[a-z]+']);
-
+Route::get('threads/create', 'ThreadsController@create')->name('threads.create');
+Route::get('threads', 'ThreadsController@index')->name('threads.index');
+Route::get('threads/{channel}', 'ThreadsController@index')->name('threads.index');
+Route::post('threads/', 'ThreadsController@store')->name('threads.store');
+Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
+Route::post('/threads/{channel}/{thread}/replies/', 'RepliesController@store')->name('replies.store');
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->name('reply.favorite');

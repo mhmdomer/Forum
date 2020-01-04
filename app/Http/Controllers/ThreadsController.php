@@ -8,7 +8,7 @@ use App\User;
 use App\Filters\ThreadFilters;
 use Illuminate\Http\Request;
 
-class ThreadController extends Controller
+class ThreadsController extends Controller
 {
 
     public function __construct()

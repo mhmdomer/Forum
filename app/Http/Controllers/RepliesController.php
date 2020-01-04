@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
 
-class ReplyController extends Controller
+class RepliesController extends Controller
 {
 
     public function __construct() {
