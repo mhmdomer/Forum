@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    use Favoritable;
+
     protected $guarded = [];
+
+    // eager-load user and favorites every time a reply is queried.
+    protected $with = ['user', 'favorites'];
 
     public function thread() {
         return $this->belongsTo('App\Thread');
@@ -16,17 +21,4 @@ class Reply extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function favorites() {
-        return $this->morphMany(Favorite::class, 'favorited');
-    }
-
-    public function favorite() {
-        if(! $this->favorites()->where('user_id', auth()->id())->exists()) {
-            return $this->favorites()->create(['user_id' => auth()->id()]);
-        }
-    }
-
-    public function isFavorited() {
-        return $this->favorites()->where('user_id', auth()->id())->exists();
-    }
 }
