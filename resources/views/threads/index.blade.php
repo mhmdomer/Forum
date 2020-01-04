@@ -5,11 +5,10 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Forum Threads</h3>
-                    <hr>
-                    @foreach ($threads as $thread)
+            <h3>Forum Threads</h3>
+            @foreach ($threads as $thread)
+                <div class="card my-4">
+                    <div class="card-body">
                         <article>
                             <div style="display: flex; justify-content:center;">
                                 <a style="flex:1;" class='' href="{{ url($thread->path()) }}" style="text-decoration: none">
@@ -17,13 +16,13 @@
                                 </a>
                                 <a href="{{ url($thread->path()) }}"><strong>{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</strong></a>
                             </div>
+                            <hr>
                             <span>{{ $thread->created_at->diffForHumans() }}</span>
                             <p>{{ $thread->body }}</p>
                         </article>
-                        <hr>
-                    @endforeach
+                    </div>
                 </div>
-            </div>
+            @endforeach
             @if(Auth::guest())
                 <div class="pt-4">
                     <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to create Threads</p>

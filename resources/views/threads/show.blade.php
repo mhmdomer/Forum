@@ -7,7 +7,20 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ route('profile', $thread->user->name) }}">{{ $thread->user->name }}</a> posted: {{ $thread->title }}
+                    <div style="display:flex;">
+                        <div style="flex:1">
+                            <a  href="{{ route('profile', $thread->user->name) }}">
+                                {{ $thread->user->name }}
+                            </a> posted: {{ $thread->title }}
+                        </div>
+                        @can('delete', $thread)
+                            <form action="{{ route('threads.delete', [$thread->channel, $thread->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        @endcan
+                    </div>
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}

@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CreateThreadsTest extends TestCase
+class ManageThreadsTest extends TestCase
 {
 
     public function setUp(): void
@@ -50,6 +50,29 @@ class CreateThreadsTest extends TestCase
     public function thread_requires_valid_channel()
     {
         $this->publishThread(['channel_id' => 99])->assertSessionHasErrors('channel_id');
+    }
+
+    /** @test */
+    public function authorized_users_can_delete_threads() {
+        $user = create('App\User');
+        $this->signIn($user);
+        $thread = create('App\Thread', ['user_id' => $user->id]);
+        $reply = create('App\Reply', ['thread_id' => $thread->id]);
+        $this->delete($thread->path())
+            ->assertRedirect('/threads');
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    /** @test */
+    public function unauthorized_users_can_not_delete_threads() {
+        $thread = create('App\Thread');
+        $this->delete($thread->path())
+            ->assertRedirect('/login');
+        $this->assertDatabaseHas('threads', ['id' => $thread->id]);
+        $this->signIn();
+        $this->delete($thread->path())
+            ->assertStatus(403);
     }
 
     public function publishThread($attributes)
