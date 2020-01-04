@@ -8,7 +8,7 @@ class Thread extends Model
 {
     protected $guarded = [];
     // eager-load channel every time a thread is queried.
-    protected $with = ['channel'];
+    protected $with = ['channel', 'user'];
 
 
     // every thread will have a replies_count attribute with it

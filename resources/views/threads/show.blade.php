@@ -7,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <a href="#">{{ $thread->user->name }}</a> posted: {{ $thread->title }}
+                    <a href="{{ route('profile', $thread->user->name) }}">{{ $thread->user->name }}</a> posted: {{ $thread->title }}
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}
@@ -39,7 +39,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="#">{{ $thread->user->name }}</a> and 
+                    <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="{{ route('profile', $thread->user->name) }}">{{ $thread->user->name }}</a> and 
                     it has {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}
                     </p>
                 </div>

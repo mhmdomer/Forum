@@ -1,7 +1,7 @@
 <div class="card mt-4">
     <div class="card-header p-3 pb-0">
         <div style="display: flex;">
-            <p class="flex-fill"> <a href="#">{{ $reply->user->name }}</a> {{ $reply->created_at->diffForHumans() }}</p>
+            <p class="flex-fill"> <a href="{{ route('profile', $reply->user->name) }}">{{ $reply->user->name }}</a> {{ $reply->created_at->diffForHumans() }}</p>
             <form method="POST" action="{{ route('reply.favorite', $reply->id) }}">
                 {{ csrf_field() }}
                 <button class="btn btn-outline-secondary" {{ $reply->isFavorited() ? 'disabled' : '' }}>

@@ -44,4 +44,9 @@ class User extends Authenticatable
     public function replies() {
         return $this->hasMany('App\Reply');
     }
+
+    // for route model binding
+    public function getRouteKeyName() {
+        return 'name';
+    }
 }

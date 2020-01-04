@@ -24,6 +24,7 @@ class ThreadsController extends Controller
     public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
+        // for tests
         if(request()->wantsJson()) return $threads->get();
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
