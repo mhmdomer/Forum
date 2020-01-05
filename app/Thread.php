@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+
+    use RecordsActivity;
+
     protected $guarded = [];
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
@@ -18,7 +21,7 @@ class Thread extends Model
             return $builder->withCount('replies');
         });
     }
-
+    
     public function user()
     {
         return $this->belongsTo('App\User');

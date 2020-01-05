@@ -2,7 +2,7 @@
 
 namespace App;
 
-trait Favoritable
+trait Favorable
 {
     public function favorites() {
         return $this->morphMany(Favorite::class, 'favorited');
