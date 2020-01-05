@@ -23,13 +23,9 @@ class ThreadsController extends Controller
      */
     public function index(Channel $channel, ThreadFilters $filters)
     {
-        $threads = Thread::latest()->filter($filters);
+        $threads = $this->getThreads($channel, $filters);
         // for tests
-        if(request()->wantsJson()) return $threads->get();
-        if ($channel->exists) {
-            $threads = $threads->where('channel_id', $channel->id);
-        }
-        $threads = $threads->get();
+        if(request()->wantsJson()) return $threads;
         return view('threads.index')->with(['threads' => $threads]);
     }
 
@@ -111,5 +107,14 @@ class ThreadsController extends Controller
         $this->authorize('delete', $thread);
         $thread->delete();
         return redirect()->route('threads.index');
+    }
+
+    private function getThreads($channel = null, $filters) {
+        $threads = Thread::latest()->filter($filters);
+        if ($channel->exists) {
+            $threads = $threads->where('channel_id', $channel->id);
+        }
+        $threads = $threads->get();
+        return $threads;
     }
 }

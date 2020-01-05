@@ -8,7 +8,7 @@ class Favorite extends Model
 {
     protected $guarded = [];
 
-    public function favoritable() {
+    public function favorable() {
         return $this->morphTo();
     }
 }
