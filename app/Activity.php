@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     protected $guarded = [];
+    protected $with = [];
 
     public function subject() {
         return $this->morphTo();

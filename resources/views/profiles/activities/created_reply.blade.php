@@ -1,7 +1,7 @@
 @component('profiles.activities.activity')
     @slot('heading')
         Replied to a thread &nbsp;
-        <a style="flex:1;" class='' href="{{ '#' }}" style="text-decoration: none">
+        <a style="flex:1;" class='' href="{{ url($activity->subject->thread->path()) }}" style="text-decoration: none">
             {{ $activity->subject->thread->title }}
         </a>
     @endslot

@@ -10,15 +10,22 @@ class Thread extends Model
     use RecordsActivity;
 
     protected $guarded = [];
+    
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
-
 
     // every thread will have a replies_count attribute with it
     protected static function boot() {
         parent::boot();
         static::addGlobalScope('replyCont', function($builder) {
             return $builder->withCount('replies');
+        });
+
+        static::deleting(function($thread) {
+            $thread->replies->each(function($reply) {
+                $reply->delete();
+            });
+            $thread->activity()->delete();    
         });
     }
     
