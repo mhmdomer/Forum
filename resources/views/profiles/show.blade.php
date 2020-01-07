@@ -13,7 +13,9 @@
             @foreach ($activities as $day => $feeds)
                 <h3>{{ $day }}</h3>
                 @foreach ($feeds as $feed)
-                    @include("profiles.activities.{$feed->type}", ['activity' => $feed])
+                    @if (view()->exists("profiles.activities.{$feed->type}"))
+                        @include("profiles.activities.{$feed->type}", ['activity' => $feed])
+                    @endif
                 @endforeach
             @endforeach
         </div>

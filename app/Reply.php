@@ -25,4 +25,8 @@ class Reply extends Model
         return $this->morphMany('App\Activity', 'subject');
     }
 
+    public function path() {
+        return $this->thread->path() . '#reply-' . $this->id;
+    }
+
 }

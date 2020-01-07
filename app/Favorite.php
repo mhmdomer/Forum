@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
+    use RecordsActivity;
     protected $guarded = [];
 
-    public function favorable() {
+    public function favorited() {
         return $this->morphTo();
+    }
+
+    public function activity() {
+        return $this->morphMany('App\Activity', 'subject');
     }
 }

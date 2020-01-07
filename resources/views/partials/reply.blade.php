@@ -1,4 +1,4 @@
-<div class="card mt-4">
+<div id="reply-{{ $reply->id }}" class="card mt-4">
     <div class="card-header p-3 pb-0">
         <div style="display: flex;">
             <p class="flex-fill"> <a href="{{ route('profile', $reply->user->name) }}">{{ $reply->user->name }}</a> {{ $reply->created_at->diffForHumans() }}</p>
