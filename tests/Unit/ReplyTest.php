@@ -14,8 +14,10 @@ class ReplyTest extends TestCase
     }
 
     /** @test */
-    public function a_reply_belongs_to_a_user()
+    public function a_reply_belongs_to_a_user_and_a_thread()
     {
         $this->assertInstanceOf('App\User', $this->reply->user);
+        $this->assertInstanceOf('App\Thread', $this->reply->thread);
     }
+
 }
