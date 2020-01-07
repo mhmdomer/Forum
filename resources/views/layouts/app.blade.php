@@ -21,6 +21,7 @@
 </head>
 <body>
     <div id="app">
+        <alert message='{{ session('message') }}'></alert>
         @include('partials.navbar')
         <main class="py-4">
             @yield('content')

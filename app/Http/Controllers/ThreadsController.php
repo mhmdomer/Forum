@@ -7,6 +7,7 @@ use App\Channel;
 use App\User;
 use App\Filters\ThreadFilters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ThreadsController extends Controller
 {
@@ -58,6 +59,7 @@ class ThreadsController extends Controller
             'title' => $request['title'],
             'body' => $request['body']
         ]);
+        Session::flash('message', 'Thread created successfully');
         return redirect($thread->path());
     }
 
