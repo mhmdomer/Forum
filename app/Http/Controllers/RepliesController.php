@@ -20,15 +20,22 @@ class RepliesController extends Controller
             'user_id' => auth()->id(),
             'thread_id' => request('thread_id'),
             'body' => request('body')
-        ]);
-        return back();
+            ]);
+            Session::flash('message', 'Reply added successfully');
+            return back();
+        }
+        
+    public function update(Reply $reply) {
+        $this->authorize('update', $reply);
+        $this->validate(request(), ['body' => 'required']);
+        $reply->update(['body' => request()->body]);
     }
 
     public function destroy(Reply $reply) {
         $this->authorize('delete', $reply);
         $thread = $reply->thread;
         $reply->delete();
-        Session::flash('message', 'Reply Deleted Successfully');
+        // Session::flash('message', 'Reply Deleted Successfully');
         return url($thread->path());
     }
 }
