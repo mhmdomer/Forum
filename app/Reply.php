@@ -12,6 +12,7 @@ class Reply extends Model
 
     // eager-load user and favorites every time a reply is queried.
     protected $with = ['user', 'favorites'];
+    protected $appends   = ['favoriteCount', 'isFavorited'];
 
     public function thread() {
         return $this->belongsTo('App\Thread');

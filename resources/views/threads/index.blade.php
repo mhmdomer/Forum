@@ -2,13 +2,13 @@
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
+<div class="container mx-auto">
+    <div class="flex flex-wrap">
+        <div class="md:w-2/3 pr-4 pl-4 md:mx-1/5">
             <h3>Forum Threads</h3>
             @foreach ($threads as $thread)
-                <div class="card my-4">
-                    <div class="card-body">
+                <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-grey-light my-4">
+                    <div class="flex-auto p-6">
                         <article>
                             <div style="display: flex; justify-content:center;">
                                 <a style="flex:1;" class='' href="{{ url($thread->path()) }}" style="text-decoration: none">

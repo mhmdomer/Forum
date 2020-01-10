@@ -17,4 +17,10 @@ class FavoritesController extends Controller
         $reply->favorite();
         return back();
     }
+
+    public function destroy(Favorite $favorite) {
+        $this->authorize('delete', $favorite);
+        $favorite->delete();
+        return back();
+    }
 }

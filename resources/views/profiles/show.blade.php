@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
+<div class="container mx-auto">
+    <div class="flex flex-wrap">
+        <div class="md:w-2/3 pr-4 pl-4 md:mx-1/5">
             <div class="mb-5">
                 <h3>
                     {{ $userProfile->name }}

@@ -16,6 +16,13 @@ trait Favorable
 
     public function isFavorited() {
         return $this->favorites->where('user_id',auth()->id())->count();
-        // return true;
+    }
+
+    public function getFavoriteCountAttribute() {
+        return $this->favorites->count();
+    }
+
+    public function getIsFavoritedAttribute() {
+        return $this->favorites->where('user_id',auth()->id())->count();
     }
 }

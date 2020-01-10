@@ -71,7 +71,7 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        $replies = $thread->replies()->withCount('favorites')->latest()->paginate(20);
+        $replies = $thread->replies()->latest()->paginate(20);
         return view('threads.show')->with(['thread' => $thread, 'replies' => $replies]);
     }
 

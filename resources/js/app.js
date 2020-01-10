@@ -20,6 +20,7 @@ import './bootstrap';
 
 Vue.component('alert', require('./components/AlertComponent.vue').default);
 Vue.component('reply', require('./components/Reply.vue').default);
+Vue.component('favorite', require('./components/Favorite.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
