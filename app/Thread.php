@@ -17,8 +17,8 @@ class Thread extends Model
     // every thread will have a replies_count attribute with it
     protected static function boot() {
         parent::boot();
-        static::addGlobalScope('replyCont', function($builder) {
-            return $builder->withCount('replies');
+        static::addGlobalScope('replyAndFavoriteCount', function($builder) {
+            return $builder->withCount(['replies', 'favorites']);
         });
 
         static::deleting(function($thread) {
