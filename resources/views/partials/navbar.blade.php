@@ -1,75 +1,59 @@
-<nav class="navbar navbar-expand-md bg-indigo-700 text-white shadow-sm text-white">
-    <div class="container">
-        <a class="navbar-brand text-white" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Browse
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ route('threads.index', '') }}">All Threads</a>
-                        <a class="dropdown-item" href="{{ url('threads?popular=1') }}">Popular Threads</a>
-                        @if (auth()->check())
-                            <a class="dropdown-item" href="{{ url('threads?by=' . auth()->user()->name) }}">My Threads</a>
-                        @endif
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{{ route('threads.create') }}">Create Thread</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Channels
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @foreach ($channels as $channel)
-                            <a class="dropdown-item" href="{{ route('threads.channel', $channel->slug) }}">{{ $channel->name }}</a>
-                        @endforeach
-                    </div>
-                </li>
-            </ul>
-
-            <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
-                <!-- Authentication Links -->
+<section class="navigation">
+    <div class="nav-container">
+        <div class="brand">
+            <a href="{{ url('/') }}">{{ config('app.name') }}</a>
+        </div>
+        <div id="navbar">
+            <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+            <ul class="nav-list">
                 @guest
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                    @endif
+                <li>
+                    <a href="{{ route('login') }}">Login</a>
+                </li>
+                <li>
+                    <a href="{{ route('register') }}">Sign Up</a>
+                </li>
                 @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('profile', auth()->user()) }}">My Profile</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
+                <li>
+                    <a href="#!">Browse</a>
+                    <ul class="nav-dropdown">
+                        <li>
+                            <a href="{{ route('threads.index') }}">All Threads</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/threads?' . 'by=' . auth()->user()->name) }}">My Threads</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="{{ route('threads.create') }}">New Thread</a>
+                </li>
+                <li>
+                    <a href="#!">Channels</a>
+                    <ul class="nav-dropdown">
+                        @foreach ($channels as $channel)
+                        <li>
+                            <a href="{{ route('threads.channel', $channel->slug) }}">{{ $channel->name }}</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!">{{ auth()->user()->name }}</a>
+                    <ul class="nav-dropdown">
+                        <li>
+                            <a href="{{ route('profile', auth()->user()->name) }}">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="logout.submit()">Logout</a>
+                        </li>
+                        <form action="{{ route('logout') }}" class="hidden" id="logout" method="POST">
+                        @csrf
+                        </form>
+                    </ul>
+                </li>
                 @endguest
             </ul>
         </div>
     </div>
-</nav>
+</section>

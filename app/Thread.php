@@ -10,7 +10,7 @@ class Thread extends Model
     use RecordsActivity;
 
     protected $guarded = [];
-    
+
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
 
@@ -25,10 +25,10 @@ class Thread extends Model
             $thread->replies->each(function($reply) {
                 $reply->delete();
             });
-            $thread->activity()->delete();    
+            $thread->activity()->delete();
         });
     }
-    
+
     public function user()
     {
         return $this->belongsTo('App\User');

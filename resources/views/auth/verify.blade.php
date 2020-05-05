@@ -1,28 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto">
-    <div class="flex flex-wrap justify-center">
-        <div class="md:w-2/3 pr-4 pl-4">
-            <div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-grey-light">
-                <div class="py-3 px-6 mb-0 bg-grey-lighter border-b-1 border-grey-light text-grey-darkest">{{ __('Verify Your Email Address') }}</div>
+    <div class="container mx-auto">
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full max-w-sm">
 
-                <div class="flex-auto p-6">
-                    @if (session('resent'))
-                        <div class="relative px-3 py-3 mb-4 border rounded text-green-darker border-green-dark bg-green-lighter" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+                @if (session('resent'))
+                    <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100  px-3 py-4 mb-4" role="alert">
+                        {{ __('A fresh verification link has been sent to your email address.') }}
+                    </div>
+                @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap py-2 px-4 rounded text-base leading-normal no-underline font-normal blue bg-transparent p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
+                <div class="flex flex-col break-words bg-white border border-2 rounded shadow-md">
+                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
+                        {{ __('Verify Your Email Address') }}
+                    </div>
+
+                    <div class="w-full flex flex-wrap p-6">
+                        <p class="leading-normal">
+                            {{ __('Before proceeding, please check your email for a verification link.') }}
+                        </p>
+
+                        <p class="leading-normal mt-6">
+                            {{ __('If you did not receive the email') }}, <a class="text-blue-500 hover:text-blue-700 no-underline" onclick="event.preventDefault(); document.getElementById('resend-verification-form').submit();">{{ __('click here to request another') }}</a>.
+                        </p>
+
+                        <form id="resend-verification-form" method="POST" action="{{ route('verification.resend') }}" class="hidden">
+                            @csrf
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

@@ -1,7 +1,7 @@
-<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-grey-light my-4">
-    <div class="flex-auto p-6">
+<div class="bg-white p-4 text-lg mt-4">
+    <div class="">
         <article>
-            <div style="display: flex;">
+            <div>
                 <h4>
                     {{ $heading }}
                 </h4>

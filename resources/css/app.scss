@@ -1,0 +1,28 @@
+@tailwind base;
+
+@tailwind components;
+
+.button {
+    @apply py-2 px-3 mt-3 rounded shadow bg-indigo-700 text-white;
+}
+
+.button:hover {
+    @apply bg-indigo-800;
+}
+
+.button:active {
+    @apply bg-indigo-900;
+}
+
+.input-field {
+    @apply appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight;
+}
+
+.input-field:focus {
+    @apply outline-none bg-white border-gray-200;
+}
+
+@import './nav.scss';
+@import './footer.css';
+
+@tailwind utilities;
