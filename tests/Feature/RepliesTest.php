@@ -25,9 +25,10 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_can_not_be_deleted_by_unauthorized_user()
     {
-        $this->expectException('Illuminate\Auth\Access\AuthorizationException');
-        $this->signIn();
         $reply = create('App\Reply');
+        $this->withExceptionHandling();
+        $this->delete('replies/' . $reply->id)->assertRedirect('/login');
+        $this->signIn();
         $this->delete('replies/' . $reply->id)
             ->assertStatus(403);
     }

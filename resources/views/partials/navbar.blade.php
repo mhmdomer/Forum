@@ -3,7 +3,7 @@
         <div class="brand">
             <a href="{{ url('/') }}">{{ config('app.name') }}</a>
         </div>
-        <div id="navbar">
+        <div id="navbar" class="shadow-lg">
             <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
             <ul class="nav-list">
                 @guest

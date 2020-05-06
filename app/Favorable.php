@@ -14,6 +14,12 @@ trait Favorable
         }
     }
 
+    public function unFavorite() {
+        if($this->favorites()->where('user_id', auth()->id())->exists()) {
+            return $this->favorites()->delete(auth()->id());
+        }
+    }
+
     public function isFavorited() {
         return $this->favorites->where('user_id',auth()->id())->count();
     }

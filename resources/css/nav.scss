@@ -1,7 +1,7 @@
 // Navigation Variables
 $content-width: 1000px;
 $breakpoint: 799px;
-$nav-height: 70px;
+$nav-height: 60px;
 $nav-background: #2c1082;
 $nav-font-color: #ffffff;
 $link-hover-color: #312540;
@@ -120,7 +120,7 @@ $link-hover-color: #312540;
 
                 a {
                     padding: 15px;
-                    line-height: 20px;
+                    // line-height: 20px;
                 }
 
                 ul li a {

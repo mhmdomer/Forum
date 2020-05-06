@@ -15,12 +15,17 @@ class FavoritesController extends Controller
 
     public function store(Reply $reply) {
         $reply->favorite();
+        if (request()->wantsJson()){
+            return response(['status' => 'Success']);
+        }
         return back();
     }
 
-    public function destroy(Favorite $favorite) {
-        $this->authorize('delete', $favorite);
-        $favorite->delete();
+    public function destroy(Reply $reply) {
+        $reply->unFavorite();
+        if (request()->wantsJson()){
+            return response(['status' => 'Success']);
+        }
         return back();
     }
 }

@@ -792,8 +792,12 @@ video {
   border-color: #edf2f7;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 .navigation {
-  height: 70px;
+  height: 60px;
   background: #2c1082;
 }
 
@@ -801,7 +805,7 @@ video {
   position: absolute;
   padding-left: 20px;
   float: left;
-  line-height: 70px;
+  line-height: 60px;
   text-transform: uppercase;
   font-size: 1.4em;
 }
@@ -836,7 +840,7 @@ video {
 #navbar ul li a:visited {
   display: block;
   padding: 0 20px;
-  line-height: 70px;
+  line-height: 60px;
   background: #2c1082;
   color: #ffffff;
   text-decoration: none;
@@ -878,8 +882,8 @@ video {
   top: 0;
   right: 0;
   background: #2c1082;
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
 }
 
 @media only screen and (max-width: 798px) {
@@ -889,7 +893,7 @@ video {
 
   #navbar {
     width: 100%;
-    padding: 70px 0 15px;
+    padding: 60px 0 15px;
   }
 
   #navbar ul {
@@ -902,7 +906,6 @@ video {
 
   #navbar ul li a {
     padding: 15px;
-    line-height: 20px;
   }
 
   #navbar ul li ul li a {

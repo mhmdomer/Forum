@@ -22,6 +22,10 @@
     @apply outline-none bg-white border-gray-200;
 }
 
+[ v-cloak ] {
+    display: none;
+}
+
 @import './nav.scss';
 @import './footer.css';
 

@@ -1946,12 +1946,30 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       count: this.reply.favoriteCount,
-      active: this.reply.isFavorited
+      isFavorited: this.reply.isFavorited
     };
   },
   computed: {
     classes: function classes() {
-      return this.isFavorited ? 'btn btn-default' : 'btn btn-default';
+      return this.isFavorited ? 'text-red-500 bg-red-200' : 'text-gray-700 bg-gray-300';
+    },
+    endpoint: function endpoint() {
+      return '/replies/' + this.reply.id + '/favorites';
+    }
+  },
+  methods: {
+    toggleFavorite: function toggleFavorite() {
+      this.isFavorited ? this.unFavorite() : this.favorite();
+    },
+    favorite: function favorite() {
+      axios.post(this.endpoint);
+      this.isFavorited = true;
+      this.count++;
+    },
+    unFavorite: function unFavorite() {
+      axios["delete"](this.endpoint);
+      this.isFavorited = false;
+      this.count--;
     }
   }
 });
@@ -31142,12 +31160,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("button", { class: _vm.classes }, [
-      _c("i", {
-        staticClass: "fa fa-heart fa-5 shadow-lg",
-        staticStyle: { color: "blue" }
-      })
-    ])
+    _c(
+      "button",
+      {
+        staticClass: "px-1 rounded-full text-sm",
+        class: _vm.classes,
+        on: { click: _vm.toggleFavorite }
+      },
+      [
+        _c("span", {
+          staticClass: "text-xs",
+          domProps: { textContent: _vm._s(_vm.count) }
+        }),
+        _vm._v(" "),
+        _c("i", { staticClass: "fa fa-heart fa-5 shadow-lg" })
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -43378,7 +43406,6 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.events = new Vue();
 
 window.flash = function (message) {
