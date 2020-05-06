@@ -18,10 +18,7 @@
         <div>
             <div v-if='!editing'>
                 <p class="text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4" v-text='body'></p>
-                @auth
-                <favorite :reply="{{ $reply }}" class="md:ml-12"></favorite>
-
-                @endauth
+                <favorite :reply="{{ $reply }}" class="mt-2" auth="{{ Auth::check() }}"></favorite>
             </div>
             <div class v-if='editing'>
                 <div class="md:ml-10 mt-2">

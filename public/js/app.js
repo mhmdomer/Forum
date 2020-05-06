@@ -1942,7 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['reply'],
+  props: ['reply', 'auth'],
   data: function data() {
     return {
       count: this.reply.favoriteCount,
@@ -1951,10 +1951,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     classes: function classes() {
-      return this.isFavorited ? 'text-red-500 bg-red-200' : 'text-gray-700 bg-gray-300';
+      var classes = this.isFavorited ? 'text-red-500 bg-red-200' : 'text-gray-700 bg-gray-300';
+      classes +=  true ? '' : undefined;
+      return classes;
     },
     endpoint: function endpoint() {
       return '/replies/' + this.reply.id + '/favorites';
+    },
+    likes: function likes() {
+      return this.format_number(this.count);
     }
   },
   methods: {
@@ -1970,6 +1975,9 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"](this.endpoint);
       this.isFavorited = false;
       this.count--;
+    },
+    format_number: function format_number(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }
 });
@@ -31163,14 +31171,15 @@ var render = function() {
     _c(
       "button",
       {
-        staticClass: "px-1 rounded-full text-sm",
+        staticClass: "md:ml-10 px-1 rounded-full text-sm",
         class: _vm.classes,
+        attrs: { disabled: !_vm.auth },
         on: { click: _vm.toggleFavorite }
       },
       [
         _c("span", {
           staticClass: "text-xs",
-          domProps: { textContent: _vm._s(_vm.count) }
+          domProps: { textContent: _vm._s(_vm.likes) }
         }),
         _vm._v(" "),
         _c("i", { staticClass: "fa fa-heart fa-5 shadow-lg" })
