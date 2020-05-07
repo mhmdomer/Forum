@@ -71,8 +71,8 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        $replies = $thread->replies()->latest()->paginate(20);
-        return view('threads.show')->with(['thread' => $thread, 'replies' => $replies]);
+        // $replies = $thread->replies()->latest()->paginate(20);
+        return view('threads.show')->with(['thread' => $thread]);
     }
 
     /**
@@ -116,7 +116,7 @@ class ThreadsController extends Controller
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);
         }
-        $threads = $threads->paginate(10);
+        $threads = $threads->get();
         return $threads;
     }
 }

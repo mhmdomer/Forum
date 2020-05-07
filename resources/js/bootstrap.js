@@ -31,3 +31,9 @@ window.events = new Vue();
 window.flash = function(message) {
     window.events.$emit('flash', message)
 };
+
+window.Vue.prototype.authorize = (handler) => {
+    // other layer of authorization
+    let user = window.App.user
+    return user ? handler(user) : false
+}

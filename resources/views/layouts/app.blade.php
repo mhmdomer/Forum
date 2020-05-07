@@ -13,4 +13,12 @@
         @include('partials.footer')
     </div>
 </body>
+<script>
+    window.App = {!! 
+        json_encode([
+            'signedIn' => Auth::check(),
+            'user' => Auth()->user()
+        ])
+    !!}
+</script>
 </html>

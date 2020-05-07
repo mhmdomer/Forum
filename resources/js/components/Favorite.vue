@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="md:ml-10 px-1 rounded-full text-sm" :class="classes" @click="toggleFavorite" :disabled="!auth">
+        <button class="md:ml-10 px-1 rounded-full text-sm" :class="classes" @click="toggleFavorite" :disabled="!authorized">
             <span v-text="likes" class="text-xs"></span> <i class="fa fa-heart fa-5 shadow-lg"></i>
         </button>
     </div>
@@ -9,11 +9,12 @@
 <script>
 export default {
 
-    props: ['reply', 'auth'],
+    props: ['reply'],
     data() {
         return {
             count: this.reply.favoriteCount,
-            isFavorited: this.reply.isFavorited
+            isFavorited: this.reply.isFavorited,
+            authorized: window.App.signedIn
         }
     },
     computed: {

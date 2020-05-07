@@ -9,9 +9,6 @@
             @foreach ($threads as $thread)
             @include('partials.thread', $thread)
             @endforeach
-            <div class="mt-4 text-center">
-                {{ $threads->links('vendor.pagination.simple-default') }}
-            </div>
             @if(Auth::guest())
             <div class="pt-4">
                 <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to create Threads</p>
