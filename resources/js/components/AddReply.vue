@@ -33,7 +33,6 @@ export default {
             axios.post(this.endpoint, {body: this.body})
                 .then(response => {
                     this.body = ''
-                    console.log(response.data)
                     this.$emit('added', response.data)
                 })
         }

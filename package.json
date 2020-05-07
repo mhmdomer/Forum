@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
+        "moment": "^2.25.3",
         "vue-clickaway": "^2.2.2"
     }
 }

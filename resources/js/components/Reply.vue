@@ -5,7 +5,7 @@
             <div>
                 <img :src="'/images/avatar' + 1 +'.jpg'" class="inline w-12 h-12 mr-4 rounded-full" alt="avatar" />
                 <a class :href="'/profiles/'+reply.user.name" v-text="reply.user.name"></a>
-                <span class="inline-block text-sm mt-0 text-gray-600" v-text="reply.created_at"></span>
+                <span class="inline-block text-sm mt-0 text-gray-600" v-text="ago"></span>
             </div>
             <div class="ml-auto" v-if="!editing && signedIn && authorized">
                 <button @click="editing = true" class="mr-1 rounded bg-gray-600 text-sm text-white px-3">
@@ -37,6 +37,7 @@
 
 <script>
 import Favorite from "./Favorite.vue";
+import moment from 'moment'
 export default {
     name: "reply",
     props: ["data"],
@@ -54,6 +55,9 @@ export default {
     computed: {
         authorized() {
             return this.authorize((user) => user.id == this.reply.user.id)
+        },
+        ago() {
+            return moment(this.reply.created_at).fromNow()
         }
     },
     methods: {

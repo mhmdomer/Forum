@@ -8,7 +8,7 @@
                 @include('partials.thread')
                 <h4 class="mt-4 text-xl md:ml-4">Replies:</h4>
                 <div class="md:mx-12 mx-2 md:mt-6 mt-2">
-                    <replies :data="{{ $thread->replies }}" @deleted="repliesCount--" @added="repliesCount++"></replies>
+                    <replies @deleted="repliesCount--" @added="repliesCount++"></replies>
                 </div>
             </div>
             <div class="lg:w-1/3">
