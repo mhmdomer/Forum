@@ -5,7 +5,7 @@
                 <textarea type="date" rows="4" class="input-field bg-gray-300" name="body" placeholder="Have something to say ?" v-model="body"></textarea>
             </div>
             <div class="mb-4">
-                <button class="button" @click="add">Post</button>
+                <button class="button" @click="add" :disabled="disabled">Post</button>
             </div>
         </div>
         <div class="pt-4" v-else>
@@ -19,7 +19,8 @@ export default {
     name: "add-reply",
     data() {
         return {
-            body: ''
+            body: '',
+            disabled: false,
         }
     },
     computed: {
@@ -29,10 +30,12 @@ export default {
     },
     methods: {
         add() {
+            this.disabled = true
             axios.post(location.pathname + '/replies', {body: this.body})
                 .then(response => {
                     this.body = ''
                     this.$emit('added', response.data)
+                    this.disabled = false
                 })
         }
     },

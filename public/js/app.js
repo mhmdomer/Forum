@@ -1858,7 +1858,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "add-reply",
   data: function data() {
     return {
-      body: ''
+      body: '',
+      disabled: false
     };
   },
   computed: {
@@ -1870,12 +1871,15 @@ __webpack_require__.r(__webpack_exports__);
     add: function add() {
       var _this = this;
 
+      this.disabled = true;
       axios.post(location.pathname + '/replies', {
         body: this.body
       }).then(function (response) {
         _this.body = '';
 
         _this.$emit('added', response.data);
+
+        _this.disabled = false;
       });
     }
   }
@@ -52091,9 +52095,15 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mb-4" }, [
-            _c("button", { staticClass: "button", on: { click: _vm.add } }, [
-              _vm._v("Post")
-            ])
+            _c(
+              "button",
+              {
+                staticClass: "button",
+                attrs: { disabled: _vm.disabled },
+                on: { click: _vm.add }
+              },
+              [_vm._v("Post")]
+            )
           ])
         ])
       : _c("div", { staticClass: "pt-4" }, [_vm._m(0)])
