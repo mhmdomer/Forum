@@ -16,6 +16,7 @@
                     <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="{{ route('profile', $thread->user->name) }}" class="text-purple-700">{{ $thread->user->name }}</a> and
                         it has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count) }}
                     </p>
+                    <subscribe-button :active={{ json_encode($thread->isSubscribed) }}></subscribe-button>
                 </div>
             </div>
         </div>

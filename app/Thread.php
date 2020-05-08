@@ -14,6 +14,8 @@ class Thread extends Model
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
 
+    protected $appends = ['isSubscribed'];
+
     // every thread will have a replies_count attribute with it
     protected static function boot() {
         parent::boot();
@@ -71,6 +73,10 @@ class Thread extends Model
     public function unsubscribe($userId = null) {
         $this->subscriptions()
             ->where('user_id', $userId ?: auth()->id())
-            ->first()->delete();
+            ->delete();
+    }
+
+    public function getIsSubscribedAttribute() {
+        return $this->subscriptions()->where('user_id', auth()->id())->exists();
     }
 }
