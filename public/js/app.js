@@ -2293,6 +2293,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2309,6 +2313,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/profiles/' + App.user.name + '/notifications').then(function (response) {
         console.log(response.data);
         _this.notifications = response.data;
+      });
+    },
+    markRead: function markRead(notification) {
+      axios["delete"]('/profiles/' + App.user.name + '/notifications/' + notification.id).then(function (response) {
+        console.log(response);
       });
     }
   }
@@ -52650,7 +52659,13 @@ var render = function() {
           return _c("li", { key: notification.id }, [
             _c("a", {
               attrs: { href: notification.data.link },
-              domProps: { textContent: _vm._s(notification.data.message) }
+              domProps: { textContent: _vm._s(notification.data.message) },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.markRead(notification)
+                }
+              }
             })
           ])
         }),

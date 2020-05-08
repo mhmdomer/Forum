@@ -3,7 +3,11 @@
         <a href="#!" class="p-0 m-0" style="content: '';"><i class="fa fa-bell"></i></a>
         <ul class="nav-dropdown overflow-hidden">
             <li v-for="notification in notifications" :key="notification.id">
-                <a :href="notification.data.link" v-text="notification.data.message"></a>
+                <a 
+                :href="notification.data.link"
+                v-text="notification.data.message"
+                @click.prevent="markRead(notification)">
+                </a>
             </li>
         </ul>
     </li>
@@ -25,6 +29,12 @@ export default {
                 .then(response => {
                     console.log(response.data)
                     this.notifications = response.data
+                })
+        },
+        markRead(notification) {
+            axios.delete('/profiles/' + App.user.name + '/notifications/' + notification.id)
+                .then(response => {
+                    console.log(response)
                 })
         }
     },
