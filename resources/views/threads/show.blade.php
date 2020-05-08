@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="lg:w-1/3">
-                <div class="bg-white mt-4 p-4 rounded text-md">
+                <div class="bg-white mt-4 p-4 rounded text-md md:mx-12">
                     <p>This thread is published {{ $thread->created_at->diffForHumans() }} by <a href="{{ route('profile', $thread->user->name) }}" class="text-purple-700">{{ $thread->user->name }}</a> and
                         it has <span v-text="repliesCount"></span> {{ str_plural('reply', $thread->replies_count) }}
                     </p>

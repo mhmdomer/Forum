@@ -2115,6 +2115,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get(this.endpoint(page)).then(function (response) {
+        window.scrollTo(0, 0);
         _this.dataSet = response.data;
         _this.items = response.data.data;
       });
@@ -52379,7 +52380,7 @@ var render = function() {
                   "button",
                   {
                     staticClass:
-                      "mr-1 rounded bg-gray-600 text-sm text-white px-3",
+                      "inline mr-1 rounded bg-gray-600 text-sm text-white px-2",
                     on: {
                       click: function($event) {
                         _vm.editing = true
@@ -52392,8 +52393,8 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "rounded bg-red-500 text-sm text-white px-3",
-                    staticStyle: { display: "inline" },
+                    staticClass:
+                      "inline rounded bg-red-500 text-sm text-white px-2",
                     on: { click: _vm.remove }
                   },
                   [_c("i", { staticClass: "fa fa-trash" })]

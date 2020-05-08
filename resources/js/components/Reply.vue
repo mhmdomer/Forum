@@ -8,10 +8,10 @@
                 <span class="inline-block text-sm mt-0 text-gray-600" v-text="ago"></span>
             </div>
             <div class="ml-auto" v-if="!editing && signedIn && authorized">
-                <button @click="editing = true" class="mr-1 rounded bg-gray-600 text-sm text-white px-3">
+                <button @click="editing = true" class="inline mr-1 rounded bg-gray-600 text-sm text-white px-2">
                     <i class="fa fa-pencil"></i>
                 </button>
-                <button style="display:inline" class="rounded bg-red-500 text-sm text-white px-3" @click="remove">
+                <button class="inline rounded bg-red-500 text-sm text-white px-2" @click="remove">
                     <i class="fa fa-trash"></i>
                 </button>
             </div>

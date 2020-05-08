@@ -12,7 +12,6 @@ class ParticipateInForumTest extends TestCase
     public function setUp() :void {
         parent::setUp();
         $this->withoutExceptionHandling();
-        $this->reply = make('App\Reply');
         $this->thread = create('App\Thread');
     }
 
@@ -20,14 +19,16 @@ class ParticipateInForumTest extends TestCase
     public function authenticated_user_may_add_replies()
     {
         $this->signIn();
-        $response = $this->post($this->thread->path() . '/replies', $this->reply->toArray());
-        $this->get($this->thread->path())->assertSee($this->reply->body);
+        $reply = create('App\Reply');
+        $this->post($this->thread->path() . '/replies', $reply->toArray());
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $reply->body]);
     }
 
     /** @test */
     public function guests_may_not_add_replies() {
         $this->expectException('Illuminate\Auth\AuthenticationException');
-        $response = $this->post($this->thread->path() . '/replies', $this->reply->toArray());
+        $reply = create('App\Reply');
+        $this->post($this->thread->path() . '/replies', $reply->toArray());
     }
 
     /** @test */

@@ -21,6 +21,12 @@
                             <a href="{{ route('threads.index') }}">All Threads</a>
                         </li>
                         <li>
+                            <a href="{{ url('/threads?popular=1') }}">Popular Threads</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/threads?unanswered=1') }}">Unanswered Threads</a>
+                        </li>
+                        <li>
                             <a href="{{ url('/threads?' . 'by=' . auth()->user()->name) }}">My Threads</a>
                         </li>
                     </ul>

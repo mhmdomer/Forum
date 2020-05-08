@@ -38,6 +38,7 @@ export default {
         getData(page) {
             axios.get(this.endpoint(page))
                 .then(response => {
+                    window.scrollTo(0, 0);
                     this.dataSet = response.data
                     this.items = response.data.data
                 })

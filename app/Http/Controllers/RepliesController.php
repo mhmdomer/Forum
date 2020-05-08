@@ -15,7 +15,7 @@ class RepliesController extends Controller
     }
 
     public function index($category, Thread $thread) {
-        return $thread->replies()->paginate(2);
+        return $thread->replies()->paginate(10);
     }
 
     public function store($channelId, Thread $thread) {

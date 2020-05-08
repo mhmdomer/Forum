@@ -31,7 +31,7 @@ class ReadThreadTest extends TestCase
     public function user_can_see_thread_replies()
     {
         $reply = create('App\Reply', ['thread_id' => $this->thread->id]);
-        $this->get($this->thread->path())->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $reply->body]);
     }
 
     /** @test */
@@ -44,6 +44,17 @@ class ReadThreadTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel->title);
+    }
+
+    /** @test */
+
+    public function user_can_filter_see_unanswered_threads() {
+        $withoutAnswers = create('App\Thread');
+        $withAnswers = create('App\Thread');
+        create('App\Reply', ['thread_id' => $withAnswers->id]);
+        $this->get('/threads?unanswered=1')
+            ->assertSee($withoutAnswers->body)
+            ->assertDontSee($withAnswers->body);
     }
 
     /** @test */
