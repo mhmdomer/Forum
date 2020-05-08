@@ -78,4 +78,15 @@ class ReadThreadTest extends TestCase
         $response = $this->getJson('/threads?popular')->json();
         $this->assertEquals([3, 2, 0], array_column($response, 'replies_count'));
     }
+
+    /** @test */
+    public function user_can_subscribe_and_unsubscribe_to_thread() {
+        $thread = create('App\Thread');
+        $user = create('App\User');
+        $thread->subscribe($user);
+        $this->assertEquals(1, $thread->subscriptions()->count());
+        $thread->unsubscribe($user);
+        $this->assertEquals(0, $thread->subscriptions()->count());
+    }
+
 }

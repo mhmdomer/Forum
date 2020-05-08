@@ -46,7 +46,7 @@ class Thread extends Model
 
     public function channel()
     {
-        return $this->belongsTo('App\Channel');
+        return $this->belongsTo(Channel::class);
     }
 
     public function scopeFilter($query, $filters)
@@ -56,5 +56,21 @@ class Thread extends Model
 
     public function favorites() {
         return $this->morphMany(Favorite::class, 'favorited');
+    }
+
+    public function subscriptions() {
+        return $this->hasMany(ThreadSubscription::class);
+    }
+
+    public function subscribe($userId = null) {
+        $this->subscriptions()->create([
+            'user_id' => $userId ?: auth()->id()
+        ]);
+    }
+
+    public function unsubscribe($userId = null) {
+        $this->subscriptions()
+            ->where('user_id', $userId ?: auth()->id())
+            ->first()->delete();
     }
 }
