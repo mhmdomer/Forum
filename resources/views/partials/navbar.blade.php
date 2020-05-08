@@ -15,7 +15,7 @@
                 </li>
                 @else
                 <li>
-                    <a href="#!">Browse</a>
+                    <a href="#!">Browse ▾</a>
                     <ul class="nav-dropdown">
                         <li>
                             <a href="{{ route('threads.index') }}">All Threads</a>
@@ -32,10 +32,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ route('threads.create') }}">New Thread</a>
-                </li>
-                <li>
-                    <a href="#!">Channels</a>
+                    <a href="#!">Channels ▾</a>
                     <ul class="nav-dropdown">
                         @foreach ($channels as $channel)
                         <li>
@@ -44,11 +41,12 @@
                         @endforeach
                     </ul>
                 </li>
+                <user-notifications></user-notifications>
                 <li>
-                    <a href="#!">{{ auth()->user()->name }}</a>
+                    <a href="#!">{{ auth()->user()->name }} ▾</a>
                     <ul class="nav-dropdown">
                         <li>
-                            <a href="{{ route('profile', auth()->user()->name) }}">Profile</a>
+                            <a href="{{ route('profile', auth()->user()->name) }}">Profile kdsfjldfjkldsfjlsdkfjd</a>
                         </li>
                         <li>
                             <a href="#" onclick="logout.submit()">Logout</a>
@@ -57,6 +55,9 @@
                         @csrf
                         </form>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{ route('threads.create') }}">New Thread</a>
                 </li>
                 @endguest
             </ul>

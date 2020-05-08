@@ -117,8 +117,6 @@
     width: 100%;
   }
 }
-@charset "UTF-8";
-
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -855,7 +853,6 @@ video {
 #navbar ul li a:not(:only-child):after,
 #navbar ul li a:visited:not(:only-child):after {
   padding-left: 4px;
-  content: " \25BE";
 }
 
 #navbar ul li ul li {

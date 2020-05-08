@@ -47,7 +47,8 @@ class ThreadWasUpdated extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => 'Testing notifications'
+            'message' => $this->reply->user->name . ' replied to thread (' . $this->thread->title . ' )',
+            'link' => $this->reply->path()
         ];
     }
 }
