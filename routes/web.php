@@ -17,12 +17,17 @@ Route::get('threads/{channel}', 'ThreadsController@index')->name('threads.channe
 Route::post('threads/', 'ThreadsController@store')->name('threads.store');
 Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
 Route::delete('threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.delete');
+
 Route::post('/threads/{channel}/{thread}/replies/', 'RepliesController@store')->name('replies.store');
 Route::get('/threads/{channel}/{thread}/replies/', 'RepliesController@index')->name('replies.index');
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store')->name('reply.favorite');
 Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy')->name('reply.un_favorite');
 Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('reply.delete');
 Route::patch('/replies/{reply}', 'RepliesController@update')->name('reply.update');
-Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+
 Route::post('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@store');
 Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsController@destroy');
+
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
+Route::get('/profiles/{user}/notifications', 'UserNotifications@index');
+Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotifications@destroy');

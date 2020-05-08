@@ -64,6 +64,14 @@ class Thread extends Model
         return $this->hasMany(ThreadSubscription::class);
     }
 
+    public function addReply($attributes) {
+        $reply = $this->replies()->create($attributes);
+        $this->subscriptions->filter(function($subscription) use($reply) {
+            return $subscription->user_id != $reply->user_id;
+        })->each->notify($reply);
+        return $reply;
+    }
+
     public function subscribe($userId = null) {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()

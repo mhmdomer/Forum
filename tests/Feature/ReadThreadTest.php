@@ -83,9 +83,9 @@ class ReadThreadTest extends TestCase
     public function user_can_subscribe_and_unsubscribe_to_thread() {
         $thread = create('App\Thread');
         $user = create('App\User');
-        $thread->subscribe($user);
+        $thread->subscribe($user->id);
         $this->assertEquals(1, $thread->subscriptions()->count());
-        $thread->unsubscribe($user);
+        $thread->unsubscribe($user->id);
         $this->assertEquals(0, $thread->subscriptions()->count());
     }
 

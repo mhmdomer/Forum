@@ -20,16 +20,15 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread) {
         $this->validate(request(), ['body' => 'required']);
-        $reply = $thread->replies()->create([
+        $reply = $thread->addReply([
             'user_id' => auth()->id(),
-            'thread_id' => request('thread_id'),
             'body' => request('body')
-            ]);
-            if(request()->expectsJson()) return $reply->load('user');
-            Session::flash('message', 'Reply added successfully');
-            return back();
-        }
-        
+        ]);
+        if(request()->expectsJson()) return $reply->load('user');
+        Session::flash('message', 'Reply added successfully');
+        return back();
+    }
+    
     public function update(Reply $reply) {
         $this->authorize('update', $reply);
         $this->validate(request(), ['body' => 'required']);
@@ -40,7 +39,6 @@ class RepliesController extends Controller
         $this->authorize('delete', $reply);
         $thread = $reply->thread;
         $reply->delete();
-        // Session::flash('message', 'Reply Deleted Successfully');
         return url($thread->path());
     }
 }
