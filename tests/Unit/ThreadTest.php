@@ -2,6 +2,9 @@
 
 namespace Tests\Unit;
 
+use App\Notifications\ThreadWasUpdated;
+use App\Thread;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class ThreadTest extends TestCase
@@ -22,5 +25,34 @@ class ThreadTest extends TestCase
     /** @test */
     public function a_thread_has_a_creator() {
         $this->assertInstanceOf('App\User', $this->thread->user);
+    }
+
+    /** @test */
+    public function a_thread_can_add_a_reply() {
+        $this->thread->addReply(['user_id' => create('App\User')->id, 'body' => 'Testing']);
+        $this->assertCount(1, $this->thread->replies);
+    }
+
+    /** @test */
+    public function a_thread_belongs_to_a_channel() {
+        $this->assertInstanceOf('App\Channel', $this->thread->channel);
+    }
+
+    /** @test */
+    public function a_thread_can_be_subscribed_to_and_unsubscribed_from() {
+        $this->signIn();
+        $this->thread->subscribe(auth()->id());
+        $this->assertCount(1, $this->thread->subscriptions);
+        $this->thread->unsubscribe(auth()->id());
+        $this->assertCount(0, $this->thread->fresh()->subscriptions);
+    }
+
+    /** @test */
+    public function a_thread_notifies_all_subscribed_users_when_a_reply_is_added() {
+        Notification::fake();
+        $this->signIn();
+        $this->thread->subscribe();
+        $this->thread->addReply(['user_id' => 1, 'body' => 'testing']);
+        Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
     }
 }
