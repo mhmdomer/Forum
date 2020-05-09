@@ -46,7 +46,7 @@
                     <a href="#!">{{ auth()->user()->name }} ▾</a>
                     <ul class="nav-dropdown">
                         <li>
-                            <a href="{{ route('profile', auth()->user()->name) }}">Profile kdsfjldfjkldsfjlsdkfjd</a>
+                            <a href="{{ route('profile', auth()->user()->name) }}">Profile</a>
                         </li>
                         <li>
                             <a href="#" onclick="logout.submit()">Logout</a>

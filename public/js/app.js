@@ -1883,7 +1883,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this.body = '';
         _this.disabled = false;
-        flash('An error accured while saving the reply', 'bg-red-500');
+        flash('An error accured while saving the reply', 'danger');
         console.log(error);
       });
     }
@@ -1908,19 +1908,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['message', 'color'],
+  props: ['message', 'level'],
   data: function data() {
     return {
       dat: '',
       show: false,
-      background: 'bg-green-400'
+      background: false
     };
   },
   methods: {
-    flash: function flash(message, color) {
-      console.log(color);
+    flash: function flash(message, level) {
+      switch (level) {
+        case 'success':
+          this.background = 'bg-green-400';
+          break;
+
+        case 'alert':
+          this.background = 'bg-yellow-500';
+          break;
+
+        case 'danger':
+          this.background = 'bg-red-400';
+          break;
+
+        default:
+          this.background = 'bg-green-400';
+          break;
+      }
+
       this.dat = message;
-      this.background = color;
       this.show = true;
       this.hide();
     },
@@ -1936,11 +1952,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     if (this.message) {
-      this.flash(this.message, this.color ? this.color : 'bg-green-400');
+      this.flash(this.message, this.level);
     }
 
-    window.events.$on('flash', function (message, color) {
-      return _this2.flash(message, color);
+    window.events.$on('flash', function (message, level) {
+      return _this2.flash(message, level);
     });
   }
 });
@@ -2195,7 +2211,8 @@ __webpack_require__.r(__webpack_exports__);
       reply: this.data,
       id: this.data.id,
       editing: false,
-      signedIn: window.App.signedIn
+      signedIn: window.App.signedIn,
+      validBody: this.data.body
     };
   },
   computed: {
@@ -2212,13 +2229,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     save: function save() {
+      var _this2 = this;
+
       axios.patch("/replies/" + this.id, {
         body: this.reply.body
-      }).then(function (response) {// handle success
-      })["catch"](function (error) {// handle error
+      }).then(function (response) {
+        _this2.validBody = _this2.reply.body;
+        flash('Reply Saved');
+      })["catch"](function (error) {
+        // TODO revert the body text
+        _this2.reply.body = _this2.validBody;
+        flash('An error Accured while saving the reply', 'danger');
       });
       this.editing = false;
-      flash("Updated");
     },
     remove: function remove() {
       axios["delete"]("/replies/" + this.id);
@@ -52263,7 +52286,7 @@ var render = function() {
       directives: [
         { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
       ],
-      staticClass: "message p-4 text-white rounded-lg",
+      staticClass: "message p-4 text-white rounded-lg z-50",
       class: _vm.background
     },
     [_c("span", { domProps: { textContent: _vm._s(_vm.dat) } })]
@@ -64922,8 +64945,9 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.events = new Vue();
 
-window.flash = function (message, color) {
-  window.events.$emit('flash', message, color);
+window.flash = function (message) {
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+  window.events.$emit('flash', message, level);
 };
 
 window.Vue.prototype.authorize = function (handler) {

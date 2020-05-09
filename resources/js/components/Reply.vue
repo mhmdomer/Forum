@@ -50,6 +50,7 @@ export default {
             id: this.data.id,
             editing: false,
             signedIn: window.App.signedIn,
+            validBody: this.data.body
         };
     },
     computed: {
@@ -65,14 +66,16 @@ export default {
             axios.patch("/replies/" + this.id, {
                     body: this.reply.body
                 })
-                .then(function (response) {
-                    // handle success
+                .then(response => {
+                    this.validBody = this.reply.body
+                    flash('Reply Saved')
                 })
-                .catch(function (error) {
-                    // handle error
+                .catch(error => {
+                    // TODO revert the body text
+                    this.reply.body = this.validBody
+                    flash('An error Accured while saving the reply', 'danger')
                 });
-            this.editing = false;
-            flash("Updated");
+                this.editing = false
         },
         remove() {
             axios.delete("/replies/" + this.id);

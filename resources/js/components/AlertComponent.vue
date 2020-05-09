@@ -1,5 +1,5 @@
 <template>
-    <div class="message p-4 text-white rounded-lg" :class="background" v-show="show">
+    <div class="message p-4 text-white rounded-lg z-50" :class="background" v-show="show">
         <span v-text="dat"></span>
     </div>
 </template>
@@ -7,19 +7,31 @@
 <script>
     export default {
 
-        props : ['message', 'color'],
+        props : ['message', 'level'],
         data() {
             return {
                 dat : '',
                 show : false,
-                background : 'bg-green-400'
+                background: false
             }
         },
         methods: {
-            flash(message, color) {
-                console.log(color)
+            flash(message, level) {
+                switch (level) {
+                    case 'success':
+                        this.background = 'bg-green-400'
+                        break;
+                    case 'alert':
+                        this.background = 'bg-yellow-500'
+                        break;
+                    case 'danger':
+                        this.background = 'bg-red-400'
+                        break;
+                    default:
+                        this.background = 'bg-green-400'
+                        break;
+                }
                 this.dat = message
-                this.background = color
                 this.show = true
                 this.hide()
             },
@@ -31,9 +43,9 @@
         },
         created() {
             if(this.message) {
-                this.flash(this.message, this.color ? this.color : 'bg-green-400')
+                this.flash(this.message, this.level)
             }
-            window.events.$on('flash', (message, color) => this.flash(message, color))
+            window.events.$on('flash', (message, level) => this.flash(message, level))
         }
 
     }
