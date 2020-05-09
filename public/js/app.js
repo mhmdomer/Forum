@@ -1880,6 +1880,11 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit('added', response.data);
 
         _this.disabled = false;
+      })["catch"](function (error) {
+        _this.body = '';
+        _this.disabled = false;
+        flash('An error accured while saving the reply', 'bg-red-500');
+        console.log(error);
       });
     }
   }
@@ -1903,16 +1908,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['message'],
+  props: ['message', 'color'],
   data: function data() {
     return {
       dat: '',
-      show: false
+      show: false,
+      background: 'bg-green-400'
     };
   },
   methods: {
-    flash: function flash(message) {
+    flash: function flash(message, color) {
+      console.log(color);
       this.dat = message;
+      this.background = color;
       this.show = true;
       this.hide();
     },
@@ -1928,11 +1936,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     if (this.message) {
-      this.flash(this.message);
+      this.flash(this.message, this.color ? this.color : 'bg-green-400');
     }
 
-    window.events.$on('flash', function (message) {
-      return _this2.flash(message);
+    window.events.$on('flash', function (message, color) {
+      return _this2.flash(message, color);
     });
   }
 });
@@ -52255,14 +52263,10 @@ var render = function() {
       directives: [
         { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
       ],
-      staticClass:
-        "alert alert-success message fade-enter-active fade-leave-active"
+      staticClass: "message p-4 text-white rounded-lg",
+      class: _vm.background
     },
-    [
-      _c("strong", [_vm._v("Success")]),
-      _vm._v(" "),
-      _c("span", { domProps: { textContent: _vm._s(_vm.dat) } })
-    ]
+    [_c("span", { domProps: { textContent: _vm._s(_vm.dat) } })]
   )
 }
 var staticRenderFns = []
@@ -64879,22 +64883,6 @@ __webpack_require__.r(__webpack_exports__);
 Vue.component('alert', __webpack_require__(/*! ./components/AlertComponent.vue */ "./resources/js/components/AlertComponent.vue")["default"]);
 Vue.component('thread-view', __webpack_require__(/*! ./pages/Thread.vue */ "./resources/js/pages/Thread.vue")["default"]);
 Vue.component('user-notifications', __webpack_require__(/*! ./components/UserNotifications */ "./resources/js/components/UserNotifications.vue")["default"]);
-Vue.directive('click-outside', {
-  bind: function bind(el, binding, vnode) {
-    el.clickOutsideEvent = function (event) {
-      // here I check that click was outside the el and his childrens
-      if (!(el == event.target || el.contains(event.target))) {
-        // and if it did, call method provided in attribute value
-        vnode.context[binding.expression](event);
-      }
-    };
-
-    document.body.addEventListener('click', el.clickOutsideEvent);
-  },
-  unbind: function unbind(el) {
-    document.body.removeEventListener('click', el.clickOutsideEvent);
-  }
-});
 var app = new Vue({
   el: '#app'
 });
@@ -64934,8 +64922,8 @@ window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 window.events = new Vue();
 
-window.flash = function (message) {
-  window.events.$emit('flash', message);
+window.flash = function (message, color) {
+  window.events.$emit('flash', message, color);
 };
 
 window.Vue.prototype.authorize = function (handler) {

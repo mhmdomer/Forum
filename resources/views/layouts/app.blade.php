@@ -5,7 +5,7 @@
 </head>
 <body>
     <div id="app" class="bg-gray-200 text-gray-700">
-        <alert message='{{ session('message') }}'></alert>
+        <alert message='{{ session('message') }}' color='{{ session('message-color') }}'></alert>
         @include('partials.navbar')
         <main class="py-4">
             @yield('content')
@@ -14,7 +14,7 @@
     </div>
 </body>
 <script>
-    window.App = {!! 
+    window.App = {!!
         json_encode([
             'signedIn' => Auth::check(),
             'user' => Auth()->user()

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -38,5 +39,14 @@ class ParticipateInForumTest extends TestCase
         $reply = make('App\Reply', ['body' => null]);
         $this->post($thread->path() . '/' . 'replies', $reply->toArray())
             ->assertSessionHasErrors('body');
+    }
+
+    /** @test */
+    public function replies_that_contains_spam_may_not_be_created() {
+        $this->signIn();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['body' => 'yahoo customer support']);
+        $this->expectException(Exception::class);
+        $this->post($thread->path() . '/replies', $reply->toArray());
     }
 }

@@ -37,6 +37,12 @@ export default {
                     this.$emit('added', response.data)
                     this.disabled = false
                 })
+                .catch(error => {
+                    this.body = ''
+                    this.disabled = false
+                    flash('An error accured while saving the reply', 'bg-red-500')
+                    console.log(error)
+                })
         }
     },
 }

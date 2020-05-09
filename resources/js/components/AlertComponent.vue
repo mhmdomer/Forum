@@ -1,22 +1,25 @@
 <template>
-    <div class="alert alert-success message fade-enter-active fade-leave-active" v-show="show">
-        <strong>Success</strong> <span v-text="dat"></span>
+    <div class="message p-4 text-white rounded-lg" :class="background" v-show="show">
+        <span v-text="dat"></span>
     </div>
 </template>
 
 <script>
     export default {
 
-        props : ['message'],
+        props : ['message', 'color'],
         data() {
             return {
                 dat : '',
-                show : false
+                show : false,
+                background : 'bg-green-400'
             }
         },
         methods: {
-            flash(message) {
+            flash(message, color) {
+                console.log(color)
                 this.dat = message
+                this.background = color
                 this.show = true
                 this.hide()
             },
@@ -28,9 +31,9 @@
         },
         created() {
             if(this.message) {
-                this.flash(this.message)
+                this.flash(this.message, this.color ? this.color : 'bg-green-400')
             }
-            window.events.$on('flash', message => this.flash(message))
+            window.events.$on('flash', (message, color) => this.flash(message, color))
         }
 
     }

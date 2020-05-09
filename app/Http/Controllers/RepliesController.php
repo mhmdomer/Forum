@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Inspections\Spam as InspectionsSpam;
 use Illuminate\Http\Request;
 use App\Thread;
 use App\Reply;
+use App\Inspections\Spam;
 use Illuminate\Support\Facades\Session;
 
 class RepliesController extends Controller
@@ -20,6 +22,7 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread) {
         $this->validate(request(), ['body' => 'required']);
+        (new Spam)->detect(request('body'));
         $reply = $thread->addReply([
             'user_id' => auth()->id(),
             'body' => request('body')
@@ -28,7 +31,7 @@ class RepliesController extends Controller
         Session::flash('message', 'Reply added successfully');
         return back();
     }
-    
+
     public function update(Reply $reply) {
         $this->authorize('update', $reply);
         $this->validate(request(), ['body' => 'required']);
