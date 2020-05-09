@@ -89,4 +89,13 @@ class ReadThreadTest extends TestCase
         $this->assertEquals(0, $thread->subscriptions()->count());
     }
 
+    /** @test */
+    public function user_can_see_if_the_thread_has_updated() {
+        $this->signIn();
+        $user = auth()->user();
+        $this->assertTrue($this->thread->hasUpdatesFor($user));
+        $this->get($this->thread->path());
+        $this->assertFalse($this->thread->hasUpdatesFor($user));
+    }
+
 }

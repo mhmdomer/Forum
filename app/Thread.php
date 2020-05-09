@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -67,6 +68,7 @@ class Thread extends Model
     public function addReply($attributes) {
         $reply = $this->replies()->create($attributes);
         $this->notifySubscribers($reply);
+        $this->touch();
         return $reply;
     }
 
@@ -91,4 +93,10 @@ class Thread extends Model
             ->where('user_id', '!=', $reply->user->id)
             ->each->notify($reply);
     }
+
+    public function hasUpdatesFor($user = null) {
+        $user = $user ?: auth()->user();
+        return cache($user->visitedThreadCacheKey($this)) < $this->updated_at;
+    }
+
 }

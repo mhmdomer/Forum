@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -52,5 +53,13 @@ class User extends Authenticatable
     // for route model binding
     public function getRouteKeyName() {
         return 'name';
+    }
+
+    public function visitedThreadCacheKey($thread) {
+        return sprintf("users.%s.visited.%s", auth()->id(), $thread->id);
+    }
+
+    public function read(Thread $thread) {
+        cache()->forever($this->visitedThreadCacheKey($thread), Carbon::now());
     }
 }

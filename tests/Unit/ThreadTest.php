@@ -49,10 +49,20 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function a_thread_notifies_all_subscribed_users_when_a_reply_is_added() {
+        // Don't send a notification or add it to database, instead fake it and save it locally
         Notification::fake();
         $this->signIn();
         $this->thread->subscribe();
         $this->thread->addReply(['user_id' => 1, 'body' => 'testing']);
         Notification::assertSentTo(auth()->user(), ThreadWasUpdated::class);
+    }
+
+    /** @test */
+    public function a_thread_can_check_if_the_authenticated_user_has_read_all_replies() {
+        $this->signIn();
+        $user = auth()->user();
+        $this->assertTrue($this->thread->hasUpdatesFor($user));
+        $user->read($this->thread);
+        $this->assertFalse($this->thread->hasUpdatesFor($user));
     }
 }

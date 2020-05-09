@@ -6,7 +6,11 @@
                     <img class="w-12 h-12 mr-4 rounded-full" src="/images/avatar{{ rand(0,4) }}.jpg" alt="avatar">
                     <div>
                         <a  href="{{ url($thread->path()) }}">
+                            @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
+                            <strong><h3>{{ $thread->title }}</h3></strong>
+                            @else
                             <h3>{{ $thread->title }}</h3>
+                            @endif
                             <span class='inline-block text-sm mt-0 text-gray-600'>{{ $thread->created_at->diffForHumans() }}</span>
                         </a>
                     </div>
