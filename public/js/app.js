@@ -2237,7 +2237,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.validBody = _this2.reply.body;
         flash('Reply Saved');
       })["catch"](function (error) {
-        // TODO revert the body text
         _this2.reply.body = _this2.validBody;
         flash('An error Accured while saving the reply', 'danger');
       });

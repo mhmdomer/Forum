@@ -1,5 +1,5 @@
 @foreach ($errors->all() as $error)
-<div class="relative px-3 py-3 mb-4 border rounded text-red-darker border-red-dark bg-red-lighter">
+<div class="p-2 my-1 bg-red-200 text-red-500 rounded-lg">
     <li>{{ $error }}</li>
 </div>
 @endforeach

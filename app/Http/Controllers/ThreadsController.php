@@ -6,6 +6,7 @@ use App\Thread;
 use App\Channel;
 use App\User;
 use App\Filters\ThreadFilters;
+use App\Rules\SpamFree;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -49,8 +50,8 @@ class ThreadsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => "required|min:4|max:100",
-            'body' => "required|min:4|max:500",
+            'title' => ["required","min:4", "max:100", new SpamFree],
+            'body' => ["required","min:4", "max:1000", new SpamFree],
             'channel_id' => "required|exists:channels,id"
         ]);
         $thread = Thread::create([

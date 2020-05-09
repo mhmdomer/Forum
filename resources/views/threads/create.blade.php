@@ -4,6 +4,7 @@
 
 <div class="flex">
     <div class="md:w-2/3 mx-auto">
+        @include('partials.errors')
         <form method="POST" action="{{ route('threads.store') }}">
             {{ csrf_field() }}
             <div class="mb-4">

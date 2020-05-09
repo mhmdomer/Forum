@@ -71,7 +71,6 @@ export default {
                     flash('Reply Saved')
                 })
                 .catch(error => {
-                    // TODO revert the body text
                     this.reply.body = this.validBody
                     flash('An error Accured while saving the reply', 'danger')
                 });
