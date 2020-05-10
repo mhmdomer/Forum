@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Thread;
 use App\Reply;
 use App\Rules\SpamFree;
+use Exception;
+use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -18,6 +20,9 @@ class RepliesController extends Controller
     }
 
     public function store($channelId, Thread $thread) {
+        if (Gate::denies('create', new Reply())) {
+            return response(['message' => 'You are posting too frequently, take a break :)'], 422);
+        }
         $this->validate(request(), ['body' => ['required', new SpamFree]]);
         $reply = $thread->addReply([
             'user_id' => auth()->id(),
@@ -27,7 +32,8 @@ class RepliesController extends Controller
     }
 
     public function update(Reply $reply) {
-        $this->authorize('update', $reply);
+        if(Gate::denies('update', $reply))
+            return response(['message' => 'You are updating too frequently, please take a break :)'], 422);
         $this->validate(request(), ['body' => ['required', new SpamFree]]);
         $reply->update(['body' => request()->body]);
     }

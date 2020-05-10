@@ -40,7 +40,7 @@ export default {
                 .catch(error => {
                     this.body = ''
                     this.disabled = false
-                    flash('An error accured while saving the reply', 'danger')
+                    flash(error.response.data.message, 'danger')
                     console.log(error)
                 })
         }

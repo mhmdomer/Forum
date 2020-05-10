@@ -30,4 +30,12 @@ class Reply extends Model
         return $this->thread->path() . '#reply-' . $this->id;
     }
 
+    public function wasJustPublished() {
+        return $this->created_at > now()->subSeconds(20);
+    }
+
+    public function wasJustUpdated() {
+        return $this->updated_at > now()->subSeconds(20);
+    }
+
 }

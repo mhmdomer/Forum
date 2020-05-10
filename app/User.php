@@ -39,15 +39,19 @@ class User extends Authenticatable
     ];
 
     public function threads() {
-        return $this->hasMany('App\Thread');
+        return $this->hasMany(Thread::class);
     }
 
     public function replies() {
-        return $this->hasMany('App\Reply');
+        return $this->hasMany(Reply::class);
     }
 
     public function activity() {
-        return $this->hasMany('App\Activity');
+        return $this->hasMany(Activity::class);
+    }
+
+    public function latestReply() {
+        return $this->replies()->latest()->first();
     }
 
     // for route model binding

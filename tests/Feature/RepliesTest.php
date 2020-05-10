@@ -9,7 +9,6 @@ class ReplyTest extends TestCase
 
     public function setUp() :void {
         parent::setUp();
-        $this->withoutExceptionHandling();
         $this->reply = create('App\Reply');
     }
 
@@ -26,7 +25,6 @@ class ReplyTest extends TestCase
     public function a_reply_can_not_be_deleted_by_unauthorized_user()
     {
         $reply = create('App\Reply');
-        $this->withExceptionHandling();
         $this->delete('replies/' . $reply->id)->assertRedirect('/login');
         $this->signIn();
         $this->delete('replies/' . $reply->id)
@@ -36,6 +34,7 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_can_not_be_updated_by_unauthorized_user()
     {
+        $this->withoutExceptionHandling();
         $this->expectException('Illuminate\Auth\Access\AuthorizationException');
         $this->signIn();
         $reply = create('App\Reply');
@@ -52,6 +51,17 @@ class ReplyTest extends TestCase
         $this->patch('replies/' . $reply->id, ['body' => $body])
             ->assertStatus(200);
         $this->assertDatabaseHas('replies', ['id' => $reply->id, 'body' => $body]);
+    }
+
+    /** @test */
+    public function a_user_cannot_reply_more_than_once_every_ten_seconds() {
+        $this->signIn();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['user_id' => auth()->id()]);
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertStatus(201);
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertStatus(403);
     }
 
 }

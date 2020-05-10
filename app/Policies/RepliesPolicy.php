@@ -41,7 +41,9 @@ class RepliesPolicy
      */
     public function create(User $user)
     {
-
+        $recentReply = $user->fresh()->latestReply();
+        if (!$recentReply) return true;
+        return !$recentReply->wasJustPublished();
     }
 
     /**
@@ -53,7 +55,8 @@ class RepliesPolicy
      */
     public function update(User $user, Reply $reply)
     {
-        return $user->id == $reply->user->id;
+        if($user->id != $reply->user->id) return false;
+        return !$reply->wasJustUpdated();
     }
 
     /**

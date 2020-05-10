@@ -71,8 +71,9 @@ export default {
                     flash('Reply Saved')
                 })
                 .catch(error => {
+                    console.log(error.response.data.message)
                     this.reply.body = this.validBody
-                    flash('An error Accured while saving the reply', 'danger')
+                    flash(error.response.data.message, 'danger')
                 });
                 this.editing = false
         },
