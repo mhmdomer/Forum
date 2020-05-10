@@ -39,4 +39,12 @@ class Reply extends Model
             && $this->created_at < $this->updated_at;
     }
 
+    public function mentionedUsers() {
+        preg_match_all('/@([^\s\.]+)/', $this->body, $matches);
+        $names = array_unique($matches[1]);
+        return collect($names)->map(function($name) {
+            return User::whereName($name)->first();
+        })->filter();
+    }
+
 }
