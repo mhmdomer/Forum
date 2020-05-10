@@ -1,12 +1,12 @@
 <template>
     <li class="inline p-0 m-0" v-show="notifications.length">
-        <a href="#!" class="p-0 m-0" style="content: '';"><i class="fa fa-bell"></i></a>
+        <a class="p-0 m-0" style="content: '';"><i class="fa fa-bell"></i></a>
         <ul class="nav-dropdown overflow-hidden">
             <li v-for="notification in notifications" :key="notification.id">
-                <a 
+                <a
                 :href="notification.data.link"
                 v-text="notification.data.message"
-                @click.prevent="markRead(notification)">
+                @click="markRead(notification)">
                 </a>
             </li>
         </ul>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\ThreadReceivedNewReply;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -68,6 +69,7 @@ class Thread extends Model
     public function addReply($attributes) {
         $reply = $this->replies()->create($attributes);
         $this->notifySubscribers($reply);
+        event(new ThreadReceivedNewReply($reply));
         $this->touch();
         return $reply;
     }

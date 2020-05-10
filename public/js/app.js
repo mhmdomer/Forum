@@ -52689,7 +52689,6 @@ var render = function() {
               domProps: { textContent: _vm._s(notification.data.message) },
               on: {
                 click: function($event) {
-                  $event.preventDefault()
                   return _vm.markRead(notification)
                 }
               }
@@ -52706,15 +52705,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "p-0 m-0",
-        staticStyle: { content: "''" },
-        attrs: { href: "#!" }
-      },
-      [_c("i", { staticClass: "fa fa-bell" })]
-    )
+    return _c("a", { staticClass: "p-0 m-0", staticStyle: { content: "''" } }, [
+      _c("i", { staticClass: "fa fa-bell" })
+    ])
   }
 ]
 render._withStripped = true

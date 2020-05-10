@@ -34,12 +34,10 @@ class ReplyTest extends TestCase
     /** @test */
     public function a_reply_can_not_be_updated_by_unauthorized_user()
     {
-        $this->withoutExceptionHandling();
-        $this->expectException('Illuminate\Auth\Access\AuthorizationException');
         $this->signIn();
         $reply = create('App\Reply');
         $this->patch('replies/' . $reply->id, ['body' => 'new body'])
-            ->assertStatus(403);
+            ->assertStatus(422);
     }
 
     /** @test */
@@ -61,7 +59,7 @@ class ReplyTest extends TestCase
         $this->post($thread->path() . '/replies', $reply->toArray())
             ->assertStatus(201);
         $this->post($thread->path() . '/replies', $reply->toArray())
-            ->assertStatus(403);
+            ->assertStatus(422);
     }
 
 }

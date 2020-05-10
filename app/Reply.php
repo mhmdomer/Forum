@@ -35,7 +35,8 @@ class Reply extends Model
     }
 
     public function wasJustUpdated() {
-        return $this->updated_at > now()->subSeconds(20);
+        return $this->updated_at > now()->subSeconds(20)
+            && $this->created_at < $this->updated_at;
     }
 
 }

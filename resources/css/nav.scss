@@ -55,6 +55,7 @@ $link-hover-color: #312540;
                 background: $nav-background;
                 color: $nav-font-color;
                 text-decoration: none;
+                cursor: pointer;
 
                 &:hover {
                     background: $link-hover-color;

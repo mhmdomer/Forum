@@ -4,7 +4,7 @@
             <a href="{{ url('/') }}">{{ config('app.name') }}</a>
         </div>
         <div id="navbar">
-            <div class="nav-mobile"><a id="nav-toggle" href="#!"><span></span></a></div>
+            <div class="nav-mobile"><a id="nav-toggle"><span></span></a></div>
             <ul class="nav-list">
                 @guest
                 <li>
@@ -15,7 +15,7 @@
                 </li>
                 @else
                 <li>
-                    <a href="#!">Browse ▾</a>
+                    <a>Browse ▾</a>
                     <ul class="nav-dropdown">
                         <li>
                             <a href="{{ route('threads.index') }}">All Threads</a>
@@ -32,7 +32,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!">Channels ▾</a>
+                    <a>Channels ▾</a>
                     <ul class="nav-dropdown">
                         @foreach ($channels as $channel)
                         <li>
@@ -43,13 +43,13 @@
                 </li>
                 <user-notifications></user-notifications>
                 <li>
-                    <a href="#!">{{ auth()->user()->name }} ▾</a>
+                    <a>{{ auth()->user()->name }} ▾</a>
                     <ul class="nav-dropdown">
                         <li>
                             <a href="{{ route('profile', auth()->user()->name) }}">Profile</a>
                         </li>
                         <li>
-                            <a href="#" onclick="logout.submit()">Logout</a>
+                            <a onclick="logout.submit()">Logout</a>
                         </li>
                         <form action="{{ route('logout') }}" class="hidden" id="logout" method="POST">
                         @csrf

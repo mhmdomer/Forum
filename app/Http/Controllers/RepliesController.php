@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\YouWhereMentioned;
 use App\Thread;
 use App\Reply;
 use App\Rules\SpamFree;
+use App\User;
 use Exception;
 use Illuminate\Support\Facades\Gate;
 

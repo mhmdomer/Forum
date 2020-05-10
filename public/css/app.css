@@ -842,6 +842,7 @@ video {
   background: #2c1082;
   color: #ffffff;
   text-decoration: none;
+  cursor: pointer;
 }
 
 #navbar ul li a:hover,
