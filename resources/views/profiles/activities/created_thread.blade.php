@@ -2,10 +2,10 @@
     @slot('heading')
         Created thread &nbsp;
         <a style="flex:1;" href="{{ url($activity->subject->path()) }}" style="text-decoration: none">
-            {{ $activity->subject->title }}
+            {!! $activity->subject->title !!}
         </a>
     @endslot
     @slot('body')
-        <p>{{ $activity->subject->body }}</p>
+        <p>{!! $activity->subject->body !!}</p>
     @endslot
 @endcomponent

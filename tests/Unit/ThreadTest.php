@@ -29,6 +29,7 @@ class ThreadTest extends TestCase
 
     /** @test */
     public function a_thread_can_add_a_reply() {
+        $this->signIn();
         $this->thread->addReply(['user_id' => create('App\User')->id, 'body' => 'Testing']);
         $this->assertCount(1, $this->thread->replies);
     }
