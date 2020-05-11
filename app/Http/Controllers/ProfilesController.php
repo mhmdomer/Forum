@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\User;
-use Illuminate\Http\Request;
 
 class ProfilesController extends Controller
 {
@@ -24,5 +23,14 @@ class ProfilesController extends Controller
 
     public function query($query) {
         return User::where('name', 'like', $query . '%')->select('name')->take(5)->pluck('name');
+    }
+
+    public function storeAvatar() {
+        request()->validate([
+            'avatar' => 'image'
+        ]);
+        auth()->user()->update([
+            'avatar' => request()->file('avatar')->store('avatars', 'public')
+        ]);
     }
 }

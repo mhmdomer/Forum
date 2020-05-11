@@ -11,8 +11,13 @@
                             @else
                             <h3>{{ $thread->title }}</h3>
                             @endif
-                            <span class='inline-block text-sm mt-0 text-gray-600'>{{ $thread->created_at->diffForHumans() }}</span>
                         </a>
+                        <span class="text-sm font-semibold">
+                            Posted By <a href="{{ route('profile', $thread->user->name) }}">{{ $thread->user->name }}</a>
+                        </span>
+                        <span class='inline-block text-sm mt-0 text-gray-600'>
+                            {{ $thread->created_at->diffForHumans() }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -20,7 +25,7 @@
             <div class="flex mt-4">
                 <div class="md:ml-16 ml-2">
                     <a class="text-xs bg-gray-300 text-gray-700 p-1 rounded-full" href="{{ url($thread->path()) }}"><strong>{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</strong></a>
-                </div> 
+                </div>
                 <div class="ml-4">
                     <strong class="text-xs bg-gray-300 text-red-500 p-1 rounded-full">
                         {{ $thread->favorites_count }} {{ str_plural('Love', $thread->favorites_count) }}
