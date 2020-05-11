@@ -20,4 +20,10 @@ class ReplyTest extends TestCase
         $this->assertInstanceOf('App\Thread', $this->reply->thread);
     }
 
+    /** @test */
+    public function it_wraps_mentioned_users_within_anchor_tags() {
+        $reply = create('App\Reply', ['body' => 'hey @mohammed.']);
+        $this->assertEquals('hey <a href="/profiles/mohammed">@mohammed</a>.', $reply->body);
+    }
+
 }

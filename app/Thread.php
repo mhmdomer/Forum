@@ -68,7 +68,6 @@ class Thread extends Model
 
     public function addReply($attributes) {
         $reply = $this->replies()->create($attributes);
-        $this->notifySubscribers($reply);
         event(new ThreadReceivedNewReply($reply));
         $this->touch();
         return $reply;
@@ -88,12 +87,6 @@ class Thread extends Model
 
     public function getIsSubscribedAttribute() {
         return $this->subscriptions()->where('user_id', auth()->id())->exists();
-    }
-
-    public function notifySubscribers(Reply $reply) {
-        $this->subscriptions
-            ->where('user_id', '!=', $reply->user->id)
-            ->each->notify($reply);
     }
 
     public function hasUpdatesFor($user = null) {

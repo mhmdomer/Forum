@@ -19,12 +19,14 @@
     </div>
     <div>
         <div v-if="!editing">
-            <p class="text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4" v-text="reply.body"></p>
+            <p class="text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4" v-html="reply.body"></p>
             <favorite :reply="this.reply" class="mt-2"></favorite>
         </div>
-        <div class v-if="editing">
+        <div v-else class>
             <div class="md:ml-10 mt-2">
-                <textarea class="input-field bg-gray-300 focus:bg-gray-200" v-model="reply.body"></textarea>
+                <at-ta :members="mentions">
+                    <textarea @keyup="changing(reply.body)" class="input-field bg-gray-300 focus:bg-gray-200" v-model="reply.body"></textarea>
+                </at-ta>
             </div>
             <div class="md:ml-10 mt-2">
                 <button @click="editing = false" class="rounded bg-gray-600 text-white px-3">Cancel</button>
@@ -36,13 +38,17 @@
 </template>
 
 <script>
+import AtTa from 'vue-at/dist/vue-at-textarea'
+import mentions from '../mixins/mentions'
 import Favorite from "./Favorite.vue";
 import moment from 'moment'
 export default {
     name: "reply",
     props: ["data"],
+    mixins: [ mentions ],
     components: {
-        Favorite
+        Favorite,
+        AtTa
     },
     data() {
         return {
@@ -50,7 +56,7 @@ export default {
             id: this.data.id,
             editing: false,
             signedIn: window.App.signedIn,
-            validBody: this.data.body
+            validBody: this.data.body,
         };
     },
     computed: {
@@ -71,20 +77,17 @@ export default {
                     flash('Reply Saved')
                 })
                 .catch(error => {
-                    console.log(error.response.data.message)
                     this.reply.body = this.validBody
                     flash(error.response.data.message, 'danger')
                 });
-                this.editing = false
+            this.editing = false
         },
         remove() {
             axios.delete("/replies/" + this.id);
             this.$emit('deleted')
-        }
+        },
     },
-    rand() {
-        return Math.floor(Math.random() * 5)
-    },
+
 }
 </script>
 

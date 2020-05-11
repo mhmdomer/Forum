@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Notifications\YouWhereMentioned;
-use App\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class NotifyMentionedUsers
+class NotifySubscribers
 {
+
     /**
      * Handle the event.
      *
@@ -17,6 +16,9 @@ class NotifyMentionedUsers
      */
     public function handle($event)
     {
-        $event->reply->mentionedUsers()->each->notify(new YouWhereMentioned($event->reply));
+        $thread = $event->reply->thread;
+        $thread->subscriptions
+            ->where('user_id', '!=', $event->reply->user->id)
+            ->each->notify($event->reply);
     }
 }

@@ -3,11 +3,11 @@
         <article>
             <div>
                 <h4>
-                    {{ $heading }}
+                    {!! $heading !!}
                 </h4>
             </div>
             <hr>
-            <p>{{ $body }}</p>
+            <p>{!! $body !!}</p>
         </article>
     </div>
 </div>

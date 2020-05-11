@@ -27,15 +27,11 @@ export default {
         getData() {
             axios.get('/profiles/' + App.user.name + '/notifications')
                 .then(response => {
-                    console.log(response.data)
                     this.notifications = response.data
                 })
         },
         markRead(notification) {
             axios.delete('/profiles/' + App.user.name + '/notifications/' + notification.id)
-                .then(response => {
-                    console.log(response)
-                })
         }
     },
 }
