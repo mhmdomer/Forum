@@ -3,7 +3,7 @@
         <article>
             <div class='text-gray-800 text-xl'>
                 <div class="flex items-start">
-                    <img class="w-12 h-12 mr-4 rounded-full" src="/images/avatar{{ rand(0,4) }}.jpg" alt="avatar">
+                    <img class="w-12 h-12 mr-4 rounded-full" src="{{ $thread->user->avatar }}" alt="avatar">
                     <div>
                         <a  href="{{ url($thread->path()) }}">
                             @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))

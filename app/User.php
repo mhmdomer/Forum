@@ -54,6 +54,13 @@ class User extends Authenticatable
         return $this->replies()->latest()->first();
     }
 
+    public function getAvatarAttribute($avatar) {
+        if($avatar) {
+            return '/storage/' . $avatar;
+        }
+        return '/images/avatars/default.jpg';
+    }
+
     // for route model binding
     public function getRouteKeyName() {
         return 'name';

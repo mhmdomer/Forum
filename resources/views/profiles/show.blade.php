@@ -8,6 +8,7 @@
             <h3>
                 {{ $userProfile->name }}
             </h3>
+            <avatar-form :user="{{ $userProfile }}"></avatar-form>
         </div>
         @forelse($activities as $day => $feeds)
             <h3 class="text-xl">{{ $day }}</h3>

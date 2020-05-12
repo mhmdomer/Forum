@@ -22,7 +22,7 @@ class ThreadsTableSeeder extends Seeder
             $data[] = [
                 'user_id' => $users->random(),
                 'channel_id' => $channels->random(),
-                'title' => $faker->title,
+                'title' => $faker->sentence,
                 'body' => $faker->paragraph,
                 'created_at' => now()->toDateTimeString(),
                 'updated_at' => now()->toDateTimeString(),

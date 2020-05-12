@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Activity;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class ProfilesController extends Controller
 {
@@ -29,8 +30,13 @@ class ProfilesController extends Controller
         request()->validate([
             'avatar' => 'image'
         ]);
+        $user = auth()->user();
+        // if($user->avatar) {
+        //     Storage::delete($user->avatar());
+        // }
         auth()->user()->update([
             'avatar' => request()->file('avatar')->store('avatars', 'public')
         ]);
+        return response([], 204);
     }
 }

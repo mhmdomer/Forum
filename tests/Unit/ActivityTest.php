@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class ActivityTest extends TestCase
 {
-    
+
     /** @test */
     public function is_recorded_when_a_thread_is_created() {
         $this->signIn();
