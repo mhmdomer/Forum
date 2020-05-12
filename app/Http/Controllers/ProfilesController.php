@@ -21,7 +21,6 @@ class ProfilesController extends Controller
             'activities' => $activities
         ]);
     }
-<<<<<<< HEAD
 
     public function query($query) {
         return User::where('name', 'like', $query . '%')->select('name')->take(5)->pluck('name');
@@ -39,11 +38,4 @@ class ProfilesController extends Controller
         Storage::delete(str_replace('storage', 'public', $oldName));
         return response([], 204);
     }
-||||||| merged common ancestors
-=======
-
-    public function query($query) {
-        return User::where('name', 'like', $query . '%')->select('name')->take(5)->pluck('name');
-    }
->>>>>>> 7b7bd647d658de230026b4730ef0cf595a7f769b
 }
