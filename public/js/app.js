@@ -2513,6 +2513,37 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2530,6 +2561,7 @@ __webpack_require__.r(__webpack_exports__);
         setTimeout(function () {
           axios.get('/query/profiles/' + query).then(function (response) {
             _this.mentions = response.data;
+            console.log(response.data);
           })["catch"](function (error) {});
         }, 500);
       } else {
