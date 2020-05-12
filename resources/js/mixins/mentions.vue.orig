@@ -1,0 +1,32 @@
+<script>
+export default {
+    data() {
+        return {
+            mentions: []
+        }
+    },
+    methods: {
+        changing(data) {
+            let lastWord = data.match(/\@([\w]+$)/)
+            if(lastWord !== null) {
+                let query = lastWord[0].substring(1)
+                setTimeout(() => {
+                    axios.get('/query/profiles/' + query)
+                        .then(response => {
+                            this.mentions = response.data
+<<<<<<< HEAD
+=======
+                            console.log(response.data)
+>>>>>>> 7b7bd647d658de230026b4730ef0cf595a7f769b
+                        })
+                        .catch(error => {
+
+                        })
+                }, 500)
+            } else {
+                this.mentions = []
+            }
+        }
+    },
+}
+</script>

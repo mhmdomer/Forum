@@ -22,9 +22,9 @@ class UserTest extends TestCase
     /** @test */
     public function a_user_can_add_an_avatar_to_his_profile() {
         $user = create('App\User');
-        $this->assertEquals(asset('images/avatars/default.jpg'), $user->avatar());
+        $this->assertEquals('/images/avatars/default.jpg', $user->avatar);
         $user->avatar = 'avatars/me.jpg';
-        $this->assertEquals(asset($user->avatar), $user->avatar());
+        $this->assertEquals($user->avatar, '/storage/avatars/me.jpg');
     }
 
 }

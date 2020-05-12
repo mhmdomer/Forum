@@ -17,11 +17,12 @@ class AvatarTest extends TestCase {
     public function users_may_add_avatars_to_their_profile() {
         $this->signIn();
         Storage::fake('public');
+        Storage::fake('storage');
         $this->withoutExceptionHandling();
         $this->post('/api/users/1/avatar', [
             'avatar' => $file = UploadedFile::fake()->image('avatar.jpg')
         ]);
-        $this->assertEquals(auth()->user()->avatar, 'avatars/'. $file->hashName());
+        $this->assertEquals(auth()->user()->avatar, '/storage/avatars/'. $file->hashName());
         Storage::disk('public')->assertExists('avatars/' . $file->hashName());
     }
 }

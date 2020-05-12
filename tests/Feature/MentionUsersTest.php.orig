@@ -41,10 +41,17 @@ class MentionUsersTest extends TestCase
 
     /** @test */
     public function it_can_fetch_all_users_starting_with_given_characters() {
+<<<<<<< HEAD
         $user = create('App\User', ['name' => 'mohammed']);
         create('App\User', ['name' => 'maya']);
         create('App\User', ['name' => 'khalid']);
         $this->signIn($user);
+=======
+        create('App\User', ['name' => 'mohammed']);
+        create('App\User', ['name' => 'maya']);
+        create('App\User', ['name' => 'khalid']);
+        $this->signIn();
+>>>>>>> 7b7bd647d658de230026b4730ef0cf595a7f769b
         $result = $this->getJson('/query/profiles/m');
         $this->assertCount(2, $result->json());
     }
