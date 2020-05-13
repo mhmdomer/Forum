@@ -24,6 +24,7 @@ class ThreadsTableSeeder extends Seeder
                 'channel_id' => $channels->random(),
                 'title' => $faker->sentence,
                 'body' => $faker->paragraph,
+                'visits' => 0,
                 'created_at' => now()->toDateTimeString(),
                 'updated_at' => now()->toDateTimeString(),
             ];

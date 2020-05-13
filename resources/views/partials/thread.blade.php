@@ -37,7 +37,7 @@
                     </strong>
                 </div>
                 <div class="text-xs bg-gray-300 ml-4 p-1 rounded-full">
-                    <strong>{{ number_format($thread->visits()->count()) }} Visits</strong>
+                    <strong>{{ number_format($thread->visits) }} Visits</strong>
                 </div>
             </div>
         </article>

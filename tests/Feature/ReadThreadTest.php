@@ -98,4 +98,13 @@ class ReadThreadTest extends TestCase
         $this->assertFalse($this->thread->hasUpdatesFor($user));
     }
 
+    /** @test */
+    public function a_visit_is_recorded_each_time_a_thread_page_is_visited() {
+        $thread = create('App\Thread');
+        $this->get($thread->path());
+        $this->assertEquals(1, $thread->fresh()->visits);
+        $this->get($thread->path());
+        $this->assertEquals(2, $thread->fresh()->visits);
+    }
+
 }
