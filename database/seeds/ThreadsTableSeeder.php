@@ -19,12 +19,14 @@ class ThreadsTableSeeder extends Seeder
         $users = collect(User::all()->modelKeys());
         $channels = collect(Channel::all()->modelKeys());
         for($i = 0; $i < 20; $i++) {
+            $title = $faker->sentence;
             $data[] = [
                 'user_id' => $users->random(),
                 'channel_id' => $channels->random(),
-                'title' => $faker->sentence,
+                'title' => $title,
                 'body' => $faker->paragraph,
                 'visits' => 0,
+                'slug' => str_slug($title),
                 'created_at' => now()->toDateTimeString(),
                 'updated_at' => now()->toDateTimeString(),
             ];

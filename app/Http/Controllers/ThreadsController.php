@@ -61,7 +61,8 @@ class ThreadsController extends Controller
             'user_id' => auth()->id(),
             'channel_id' => $request['channel_id'],
             'title' => $request['title'],
-            'body' => $request['body']
+            'body' => $request['body'],
+            'slug' => str_slug($request['title'])
         ]);
         Session::flash('message', 'Thread created successfully');
         return redirect($thread->path());
@@ -73,8 +74,9 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread, Trending $trending)
+    public function show($channel, $thread, $slug, Trending $trending)
     {
+        $thread = Thread::find($thread);
         if (auth()->check()) {
             auth()->user()->read($thread);
         }

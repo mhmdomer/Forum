@@ -36,7 +36,8 @@ class ThreadsTest extends TestCase
     /** @test */
     public function a_user_should_verify_his_email_before_adding_a_thread() {
         $this->signIn();
-        $this->postJson('/threads', make('App\Thread')->toArray())
+        $thread = make('App\Thread');
+        $this->postJson('/threads', $thread->toArray())
             ->assertRedirect();
         auth()->user()->email_verified_at = null;
         auth()->user()->save();

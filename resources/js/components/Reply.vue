@@ -29,7 +29,7 @@
                 </at-ta>
             </div>
             <div class="md:ml-10 mt-2">
-                <button @click="editing = false" class="rounded bg-gray-600 text-white px-3">Cancel</button>
+                <button @click="cancel" class="rounded bg-gray-600 text-white px-3">Cancel</button>
                 <button style="display:inline" class="rounded bg-green-500 text-white px-3" @click="save">Save</button>
             </div>
         </div>
@@ -86,6 +86,10 @@ export default {
             axios.delete("/replies/" + this.id);
             this.$emit('deleted')
         },
+        cancel() {
+            this.editing = false
+            this.reply.body = this.validBody
+        }
     },
 
 }

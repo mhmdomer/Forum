@@ -2371,6 +2371,10 @@ __webpack_require__.r(__webpack_exports__);
     remove: function remove() {
       axios["delete"]("/replies/" + this.id);
       this.$emit('deleted');
+    },
+    cancel: function cancel() {
+      this.editing = false;
+      this.reply.body = this.validBody;
     }
   }
 });
@@ -53023,11 +53027,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "rounded bg-gray-600 text-white px-3",
-                    on: {
-                      click: function($event) {
-                        _vm.editing = false
-                      }
-                    }
+                    on: { click: _vm.cancel }
                   },
                   [_vm._v("Cancel")]
                 ),

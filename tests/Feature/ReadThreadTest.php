@@ -22,7 +22,7 @@ class ReadThreadTest extends TestCase
     }
 
     /** @test */
-    public function user_can_view_single_thread()
+    public function user_can_see_a_single_thread()
     {
         $this->get($this->thread->path())->assertSee($this->thread->title);
     }
