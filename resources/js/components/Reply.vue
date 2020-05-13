@@ -3,7 +3,7 @@
     <div class="text-gray-800 text-lg">
         <div class="flex items-center">
             <div>
-                <img :src="'/images/avatar' + 1 +'.jpg'" class="inline w-12 h-12 mr-4 rounded-full" alt="avatar" />
+                <img :src="reply.body" class="inline w-12 h-12 mr-4 rounded-full" alt="avatar" />
                 <a class :href="'/profiles/'+reply.user.name" v-text="reply.user.name"></a>
                 <span class="inline-block text-sm mt-0 text-gray-600" v-text="ago"></span>
             </div>
