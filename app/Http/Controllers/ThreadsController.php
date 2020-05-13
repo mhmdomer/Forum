@@ -74,9 +74,10 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channel, $thread, $slug, Trending $trending)
+    public function show(Channel $channel, $thread, Trending $trending)
     {
-        $thread = Thread::find($thread);
+        // dd($thread);
+        $thread = Thread::whereSlug($thread)->first();
         if (auth()->check()) {
             auth()->user()->read($thread);
         }

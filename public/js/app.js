@@ -1892,7 +1892,6 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.disabled = false;
       })["catch"](function (error) {
-        _this.body = '';
         _this.disabled = false;
         flash(error.response.data.message, 'danger');
       });

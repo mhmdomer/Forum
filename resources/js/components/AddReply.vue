@@ -46,7 +46,6 @@ export default {
                     this.disabled = false
                 })
                 .catch(error => {
-                    this.body = ''
                     this.disabled = false
                     flash(error.response.data.message, 'danger')
                 })
