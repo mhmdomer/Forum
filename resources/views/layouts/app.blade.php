@@ -5,7 +5,7 @@
 </head>
 <body>
     <div id="app" class="bg-gray-200 text-gray-700">
-        <alert message='{{ session('message') }}' level='{{ session('message-level') }}'></alert>
+        <flash message='{{ session('message') }}' level='{{ session('message-level') }}'></flash>
         @include('partials.navbar')
         <main class="py-4">
             @yield('content')

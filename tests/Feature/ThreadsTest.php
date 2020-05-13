@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ManageThreadsTest extends TestCase
+class ThreadsTest extends TestCase
 {
 
     public function setUp(): void
@@ -31,6 +31,17 @@ class ManageThreadsTest extends TestCase
         $this->withoutExceptionHandling();
         $this->expectException('Illuminate\Auth\AuthenticationException');
         $this->post('threads', $this->thread->toArray());
+    }
+
+    /** @test */
+    public function a_user_should_verify_his_email_before_adding_a_thread() {
+        $this->signIn();
+        $this->postJson('/threads', make('App\Thread')->toArray())
+            ->assertRedirect();
+        auth()->user()->email_verified_at = null;
+        auth()->user()->save();
+        $this->postJson('/threads', make('App\Thread')->toArray())
+            ->assertStatus(403);
     }
 
     /** @test */

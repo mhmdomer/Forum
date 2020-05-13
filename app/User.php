@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -38,6 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['image'];
+
     public function threads() {
         return $this->hasMany(Thread::class);
     }
@@ -59,6 +61,11 @@ class User extends Authenticatable
             return '/storage/' . $avatar;
         }
         return '/images/avatars/default.jpg';
+    }
+
+    // for axios calls in vue
+    public function getImageAttribute() {
+        return $this->avatar;
     }
 
     // for route model binding
