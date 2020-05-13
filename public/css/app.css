@@ -790,6 +790,10 @@ video {
   border-color: #edf2f7;
 }
 
+.trending-thread:last-child .divider {
+  display: none;
+}
+
 [v-cloak] {
   display: none;
 }

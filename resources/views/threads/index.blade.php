@@ -18,16 +18,18 @@
             </div>
             @endif
         </div>
-        <div class="md:w-1/3 md:mx-auto mx-4 mt-6 md:ml-6">
+        <div class="md:w-1/3 md:mx-auto mx-4 mt-3 md:ml-6">
+            @if (count($trending))
             <h1 class="text-3xl">Trending Threads</h1>
-            <div class="bg-indigo-900 text-gray-200 rounded-lg p-2 pt-4">
+            <div class="bg-gray-100 mt-1 text-indigo-500 rounded-lg p-2 pt-4 border-2">
                 @foreach ($trending as $thread)
-                    <div class="mb-4">
+                    <div class="mb-4 trending-thread">
                         <a href="{{ $thread->path }}">{{ $thread->title }}</a>
-                        {{-- <hr></div> --}}
+                        <hr class="mt-4 divider">
                     </div>
                 @endforeach
             </div>
+            @endif
         </div>
     </div>
 </div>

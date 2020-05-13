@@ -52922,7 +52922,7 @@ var render = function() {
           _c("div", [
             _c("img", {
               staticClass: "inline w-12 h-12 mr-4 rounded-full",
-              attrs: { src: "/images/avatar" + 1 + ".jpg", alt: "avatar" }
+              attrs: { src: _vm.reply.body, alt: "avatar" }
             }),
             _vm._v(" "),
             _c("a", {
