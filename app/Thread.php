@@ -3,7 +3,7 @@
 namespace App;
 
 use App\Events\ThreadReceivedNewReply;
-use Carbon\Carbon;
+use App\Helpers\Visits;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -92,6 +92,10 @@ class Thread extends Model
     public function hasUpdatesFor($user = null) {
         $user = $user ?: auth()->user();
         return cache($user->visitedThreadCacheKey($this)) < $this->updated_at;
+    }
+
+    public function visits() {
+        return new Visits($this);
     }
 
 }

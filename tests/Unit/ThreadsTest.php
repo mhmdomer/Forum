@@ -5,9 +5,10 @@ namespace Tests\Unit;
 use App\Notifications\ThreadWasUpdated;
 use App\Thread;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redis;
 use Tests\TestCase;
 
-class ThreadTest extends TestCase
+class ThreadsTest extends TestCase
 {
 
     public function setUp() :void {
@@ -65,5 +66,15 @@ class ThreadTest extends TestCase
         $this->assertTrue($this->thread->hasUpdatesFor($user));
         $user->read($this->thread);
         $this->assertFalse($this->thread->hasUpdatesFor($user));
+    }
+
+    /** @test */
+    public function a_thread_records_each_visit() {
+        $thread = create('App\Thread');
+        $thread->visits()->reset();
+        $thread->visits()->record();
+        $this->assertEquals(1, $thread->visits()->count());
+        $thread->visits()->record();
+        $this->assertEquals(2, $thread->visits()->count());
     }
 }
