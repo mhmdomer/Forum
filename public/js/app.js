@@ -2221,6 +2221,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2319,6 +2323,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2336,18 +2343,18 @@ __webpack_require__.r(__webpack_exports__);
       reply: this.data,
       id: this.data.id,
       editing: false,
-      signedIn: window.App.signedIn,
-      validBody: this.data.body
+      validBody: this.data.body,
+      isBest: this.data.isBest
     };
   },
-  computed: {
-    authorized: function authorized() {
-      var _this = this;
+  created: function created() {
+    var _this = this;
 
-      return this.authorize(function (user) {
-        return user.id == _this.reply.user.id;
-      });
-    },
+    window.events.$on('bested', function (id) {
+      _this.isBest = id == _this.id;
+    });
+  },
+  computed: {
     ago: function ago() {
       return moment__WEBPACK_IMPORTED_MODULE_3___default()(this.reply.created_at).fromNow();
     }
@@ -2374,6 +2381,14 @@ __webpack_require__.r(__webpack_exports__);
     cancel: function cancel() {
       this.editing = false;
       this.reply.body = this.validBody;
+    },
+    markBest: function markBest() {
+      axios.post("/replies/" + this.reply.id + "/best").then(function (response) {
+        flash('Best reply recorded');
+      })["catch"](function (error) {
+        flash(error.response.data.message, 'danger');
+      });
+      window.events.$emit('bested', this.reply.id);
     }
   }
 });
@@ -52918,7 +52933,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "bg-white p-4 rounded", attrs: { id: "reply-" + _vm.id } },
+    {
+      staticClass: "bg-white p-4 rounded",
+      class: _vm.isBest ? "bg-green-200" : "",
+      attrs: { id: "reply-" + _vm.id }
+    },
     [
       _c("div", { staticClass: "text-gray-800 text-lg" }, [
         _c("div", { staticClass: "flex items-center" }, [
@@ -52939,7 +52958,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          !_vm.editing && _vm.signedIn && _vm.authorized
+          !_vm.editing && _vm.signedIn && _vm.authorize("owns", _vm.reply)
             ? _c("div", { staticClass: "ml-auto" }, [
                 _c(
                   "button",
@@ -52971,22 +52990,45 @@ var render = function() {
       _vm._v(" "),
       _c("div", [
         !_vm.editing
-          ? _c(
-              "div",
-              [
-                _c("p", {
-                  staticClass:
-                    "text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4",
-                  domProps: { innerHTML: _vm._s(_vm.reply.body) }
-                }),
-                _vm._v(" "),
-                _c("favorite", {
-                  staticClass: "mt-2",
-                  attrs: { reply: this.reply }
-                })
-              ],
-              1
-            )
+          ? _c("div", [
+              _c("p", {
+                staticClass:
+                  "text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4",
+                domProps: { innerHTML: _vm._s(_vm.reply.body) }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex" },
+                [
+                  _c("favorite", {
+                    staticClass: "mt-2",
+                    attrs: { reply: this.reply }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value:
+                            !_vm.isBest &&
+                            _vm.authorize("owns", _vm.reply.thread),
+                          expression:
+                            "!isBest && authorize('owns', reply.thread)"
+                        }
+                      ],
+                      staticClass: "ml-auto button text-sm px-1 py-0",
+                      on: { click: _vm.markBest }
+                    },
+                    [_vm._v("Mark as Best")]
+                  )
+                ],
+                1
+              )
+            ])
           : _c("div", {}, [
               _c(
                 "div",
@@ -65344,6 +65386,23 @@ __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 
 /***/ }),
 
+/***/ "./resources/js/authorization.js":
+/*!***************************************!*\
+  !*** ./resources/js/authorization.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+module.exports = {
+  owns: function owns(model) {
+    var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'user_id';
+    return model[key] == user.id;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -65352,23 +65411,7 @@ __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
 /***/ (function(module, exports, __webpack_require__) {
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-// try {
-// window.Popper = require('popper.js').default;
-
-window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // require('bootstrap');
-// } catch (e) {}
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
@@ -65380,11 +65423,23 @@ window.flash = function (message) {
   window.events.$emit('flash', message, level);
 };
 
-window.Vue.prototype.authorize = function (handler) {
-  // other layer of authorization
-  var user = window.App.user;
-  return user ? handler(user) : false;
+var authorization = __webpack_require__(/*! ./authorization */ "./resources/js/authorization.js");
+
+window.Vue.prototype.authorize = function () {
+  if (!window.App.signedIn) return false;
+
+  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+    params[_key] = arguments[_key];
+  }
+
+  if (typeof params[0] == "string") {
+    return authorization[params[0]](params[1]);
+  }
+
+  return params[0](window.App.user);
 };
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 /***/ }),
 

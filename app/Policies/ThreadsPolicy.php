@@ -60,6 +60,7 @@ class ThreadsPolicy
      */
     public function update(User $user, Thread $thread)
     {
+        // dd($thread);
         return $thread->user_id == $user->id;
     }
 

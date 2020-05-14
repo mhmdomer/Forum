@@ -1,5 +1,5 @@
 <template>
-<div :id="'reply-'+id" class="bg-white p-4 rounded">
+<div :id="'reply-'+id" class="bg-white p-4 rounded" :class="isBest ? 'bg-green-200' : ''">
     <div class="text-gray-800 text-lg">
         <div class="flex items-center">
             <div>
@@ -7,7 +7,7 @@
                 <a class :href="'/profiles/'+reply.user.name" v-text="reply.user.name"></a>
                 <span class="inline-block text-sm mt-0 text-gray-600" v-text="ago"></span>
             </div>
-            <div class="ml-auto" v-if="!editing && signedIn && authorized">
+            <div class="ml-auto" v-if="!editing && signedIn && authorize('owns', reply)">
                 <button @click="editing = true" class="inline mr-1 rounded bg-gray-600 text-sm text-white px-2">
                     <i class="fa fa-pencil"></i>
                 </button>
@@ -20,7 +20,10 @@
     <div>
         <div v-if="!editing">
             <p class="text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4" v-html="reply.body"></p>
-            <favorite :reply="this.reply" class="mt-2"></favorite>
+            <div class="flex">
+                <favorite :reply="this.reply" class="mt-2"></favorite>
+                <button v-show="!isBest && authorize('owns', reply.thread)" class="ml-auto button text-sm px-1 py-0" @click="markBest">Mark as Best</button>
+            </div>
         </div>
         <div v-else class>
             <div class="md:ml-10 mt-2">
@@ -55,14 +58,16 @@ export default {
             reply: this.data,
             id: this.data.id,
             editing: false,
-            signedIn: window.App.signedIn,
             validBody: this.data.body,
+            isBest: this.data.isBest,
         };
     },
+    created() {
+        window.events.$on('bested', id => {
+            this.isBest = (id == this.id)
+        })
+    },
     computed: {
-        authorized() {
-            return this.authorize((user) => user.id == this.reply.user.id)
-        },
         ago() {
             return moment(this.reply.created_at).fromNow()
         }
@@ -89,6 +94,16 @@ export default {
         cancel() {
             this.editing = false
             this.reply.body = this.validBody
+        },
+        markBest() {
+            axios.post("/replies/" + this.reply.id + "/best")
+                .then(response => {
+                    flash('Best reply recorded')
+                })
+                .catch(error => {
+                    flash(error.response.data.message, 'danger')
+                })
+            window.events.$emit('bested', this.reply.id)
         }
     },
 

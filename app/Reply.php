@@ -12,7 +12,7 @@ class Reply extends Model
 
     // eager-load user and favorites every time a reply is queried.
     protected $with = ['user', 'favorites'];
-    protected $appends   = ['favoriteCount', 'isFavorited'];
+    protected $appends   = ['favoriteCount', 'isFavorited', 'isBest'];
 
     public function thread() {
         return $this->belongsTo('App\Thread');
@@ -37,6 +37,19 @@ class Reply extends Model
     public function wasJustUpdated() {
         return $this->updated_at > now()->subSeconds(10)
             && $this->created_at < $this->updated_at;
+    }
+
+    public function makeBest() {
+        $this->thread->update(['best_reply_id' => $this->id]);
+        return $this;
+    }
+
+    public function isBest() {
+        return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getIsBestAttribute() {
+        return $this->isBest();
     }
 
     public function mentionedUsers() {

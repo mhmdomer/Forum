@@ -15,6 +15,8 @@ class Thread extends Model
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
 
+    protected $casts = ['id' => 'integer']; 
+
     protected $appends = ['isSubscribed'];
 
     // every thread will have a replies_count attribute with it

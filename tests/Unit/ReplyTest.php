@@ -26,4 +26,13 @@ class ReplyTest extends TestCase
         $this->assertEquals('hey <a href="/profiles/mohammed">@mohammed</a>.', $reply->body);
     }
 
+    /** @test */
+    public function a_replies_knows_if_it_is_the_best_reply() {
+        $thread = create('App\Thread');
+        $replies = create('App\Reply', ['thread_id' => $thread->id], 4);
+        $this->assertFalse($replies[2]->isBest());
+        $replies[2]->makeBest();
+        $this->assertTrue($replies[2]->isBest());
+    }
+
 }
