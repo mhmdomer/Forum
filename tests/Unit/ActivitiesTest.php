@@ -6,7 +6,7 @@ use App\Activity;
 use Carbon\Carbon;
 use Tests\TestCase;
 
-class ActivityTest extends TestCase
+class ActivitiesTest extends TestCase
 {
 
     /** @test */

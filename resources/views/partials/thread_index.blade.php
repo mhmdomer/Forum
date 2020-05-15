@@ -19,7 +19,7 @@
                             {{ $thread->created_at->diffForHumans() }}
                         </span>
                     </div>
-                    <div class="ml-auto">
+                    <div class="ml-auto" v-cloak>
                         <span class="text-sm rounded-lg bg-gray-300 p-1">
                             {{ $thread->channel->name }}
                         </span>
@@ -28,15 +28,15 @@
             </div>
             <p class="text-gray-700 md:ml-16 bg-gray-100 rounded-lg p-4">{{ $thread->body }}</p>
             <div class="flex mt-4">
-                <div class="md:ml-16 ml-2">
+                <div v-cloak class="md:ml-16 ml-2">
                     <a class="text-xs bg-gray-300 text-gray-700 p-1 rounded-full" href="{{ url($thread->path()) }}"><strong>{{ number_format($thread->replies_count) }} <i class="fa fa-comment"></i></strong></a>
                 </div>
-                <div class="ml-4">
-                    <strong class="text-xs bg-gray-300 text-red-500 p-1 rounded-full">
-                        {{ number_format($thread->favorites_count) }} <i class="fa fa-heart"></i>
-                    </strong>
-                </div>
-                <div class="text-xs bg-gray-300 ml-4 p-1 rounded-full">
+                <favorite
+                    class="ml-2"
+                    :model="{{ $thread }}"
+                    endpoint="{{ '/favorite/threads/' . $thread->id }}">
+                </favorite>
+                <div v-cloak class="text-xs bg-gray-300 ml-4 p-1 rounded-full">
                     <strong>{{ number_format($thread->visits) }} Visits</strong>
                 </div>
             </div>

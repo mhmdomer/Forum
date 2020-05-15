@@ -52,19 +52,18 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $data = request()->validate([
             'title' => ["required","min:4", "max:100", new SpamFree],
             'body' => ["required","min:4", "max:1000", new SpamFree],
             'channel_id' => "required|exists:channels,id"
         ]);
-        $thread = Thread::create([
-            'user_id' => auth()->id(),
-            'channel_id' => $request['channel_id'],
-            'title' => $request['title'],
-            'body' => $request['body'],
-            'slug' => str_slug($request['title'])
-        ]);
-        Session::flash('message', 'Thread created successfully');
+        $thread = Thread::create(
+            array_merge($data, [
+                'user_id' => auth()->id(),
+                'slug' => str_slug($request['title'])
+                ]
+            )
+        );
         return redirect($thread->path());
     }
 
@@ -76,7 +75,7 @@ class ThreadsController extends Controller
      */
     public function show(Channel $channel, $thread, Trending $trending)
     {
-        $thread = Thread::whereSlug($thread)->first();
+        $thread = Thread::whereSlug($thread)->firstOrFail();
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
@@ -103,9 +102,15 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update(Channel $channel, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+        $data = request()->validate([
+            'title' => ["required","min:4", "max:100", new SpamFree],
+            'body' => ["required","min:4", "max:1000", new SpamFree],
+        ]);
+        $thread->update($data);
+        return $thread;
     }
 
     /**
@@ -114,8 +119,9 @@ class ThreadsController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($channel, Thread $thread)
+    public function destroy(Channel $channel, $thread)
     {
+        $thread = Thread::whereSlug($thread)->firstOrFail();
         $this->authorize('delete', $thread);
         $thread->delete();
         return redirect()->route('threads.index');

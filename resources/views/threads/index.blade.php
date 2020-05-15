@@ -7,7 +7,7 @@
         <div class="md:w-2/3 md:mx-auto sm:mx-12 mx-4">
             <h1 class="text-3xl">Forum Threads</h1>
             @foreach ($threads as $thread)
-            @include('partials.thread', $thread)
+            @include('partials.thread_index', $thread)
             @endforeach
             <div class="mt-4">
                 {{ $threads->links('vendor.pagination.default') }}

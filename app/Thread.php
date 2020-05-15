@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
 
-    use RecordsActivity;
+    use RecordsActivity, Favorable;
 
     protected $guarded = [];
 
@@ -17,7 +17,7 @@ class Thread extends Model
 
     protected $casts = ['id' => 'integer', 'locked' => 'boolean'];
 
-    protected $appends = ['isSubscribed'];
+    protected $appends = ['isSubscribed', 'favoriteCount', 'isFavorited'];
 
     // every thread will have a replies_count attribute with it
     protected static function boot() {

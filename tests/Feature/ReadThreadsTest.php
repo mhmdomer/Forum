@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ReadThreadTest extends TestCase
+class ReadThreadsTest extends TestCase
 {
 
     public function setUp(): void

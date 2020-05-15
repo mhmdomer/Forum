@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+class UsersTest extends TestCase
 {
 
     /** @test */

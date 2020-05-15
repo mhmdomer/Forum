@@ -21,7 +21,7 @@
         <div v-if="!editing">
             <p class="text-gray-700 md:ml-10 bg-gray-100 rounded-lg p-4" v-html="reply.body"></p>
             <div class="flex">
-                <favorite :reply="this.reply" class="mt-2"></favorite>
+                <favorite :model="this.reply" :endpoint="'/replies/' + id + '/favorites'" class="mt-2 md:ml-10 "></favorite>
                 <button v-show="!isBest && authorize('owns', reply.thread)" class="ml-auto button text-sm px-1 py-0" @click="markBest">Mark as Best</button>
             </div>
         </div>
@@ -43,14 +43,12 @@
 <script>
 import AtTa from 'vue-at/dist/vue-at-textarea'
 import mentions from '../mixins/mentions'
-import Favorite from "./Favorite.vue";
 import moment from 'moment'
 export default {
     name: "reply",
     props: ["data"],
     mixins: [ mentions ],
     components: {
-        Favorite,
         AtTa
     },
     data() {

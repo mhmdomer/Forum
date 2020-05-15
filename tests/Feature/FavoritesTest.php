@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class FavoriteTest extends TestCase
+class FavoritesTest extends TestCase
 {
     /** @test */
     public function guest_can_not_favorite_replies() {

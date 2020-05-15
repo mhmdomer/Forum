@@ -15,8 +15,11 @@ Route::get('threads/create', 'ThreadsController@create')->name('threads.create')
 Route::get('threads', 'ThreadsController@index')->name('threads.index');
 Route::get('threads/{channel}', 'ThreadsController@index')->name('threads.channel');
 Route::post('threads/', 'ThreadsController@store')->name('threads.store');
+Route::patch('threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 Route::get('threads/{channel}/{id}', 'ThreadsController@show')->name('threads.show');
-Route::delete('threads/{channel}/{thread}', 'ThreadsController@destroy');
+Route::delete('threads/{channel}/{thread}', 'ThreadsController@destroy')->name('threads.destroy');
+Route::post('favorite/threads/{thread}', 'FavoritesController@storeThread');
+Route::delete('favorite/threads/{thread}', 'FavoritesController@destroyThread');
 
 Route::post('threads/{thread}/lock', 'LockThreadsController@lock')->name('threads.lock');
 Route::post('threads/{thread}/unlock', 'LockThreadsController@unlock')->name('threads.unlock');
