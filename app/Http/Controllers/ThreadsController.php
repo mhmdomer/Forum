@@ -76,7 +76,6 @@ class ThreadsController extends Controller
      */
     public function show(Channel $channel, $thread, Trending $trending)
     {
-        // dd($thread);
         $thread = Thread::whereSlug($thread)->first();
         if (auth()->check()) {
             auth()->user()->read($thread);

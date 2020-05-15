@@ -44,7 +44,6 @@ export default {
                     axios.get('/query/profiles/' + query)
                         .then(response => {
                             this.mentions = response.data
-                            console.log(response.data)
                         })
                         .catch(error => {
 

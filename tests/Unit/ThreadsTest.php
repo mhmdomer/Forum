@@ -74,4 +74,20 @@ class ThreadsTest extends TestCase
         $this->assertFalse($this->thread->hasUpdatesFor($user));
     }
 
+    /** @test */
+    public function a_thread_can_be_locked() {
+        $this->assertFalse($this->thread->locked);
+        $this->thread->update(['locked' => true]);
+        $this->assertTrue($this->thread->locked);
+    }
+
+    /** @test */
+    public function a_thread_can_be_unlocked() {
+        $this->assertFalse($this->thread->locked);
+        $this->thread->update(['locked' => true]);
+        $this->assertTrue($this->thread->locked);
+        $this->thread->update(['locked' => false]);
+        $this->assertFalse($this->thread->locked);
+    }
+
 }

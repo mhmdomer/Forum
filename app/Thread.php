@@ -15,7 +15,7 @@ class Thread extends Model
     // eager-load channel every time a thread is queried.
     protected $with = ['channel', 'user'];
 
-    protected $casts = ['id' => 'integer']; 
+    protected $casts = ['id' => 'integer', 'locked' => 'boolean'];
 
     protected $appends = ['isSubscribed'];
 

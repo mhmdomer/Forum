@@ -27,4 +27,21 @@ class UserTest extends TestCase
         $this->assertEquals($user->avatar, '/storage/avatars/me.jpg');
     }
 
+    /** @test */
+    public function a_user_can_be_marked_as_an_admin() {
+        $user = create('App\User');
+        $this->assertFalse($user->admin);
+        $user->makeAdmin();
+        $this->assertTrue($user->fresh()->admin);
+    }
+
+    /** @test */
+    public function an_admin_can_be_marked_as_a_regular_user() {
+        $user = create('App\User');
+        $user->makeAdmin();
+        $this->assertTrue($user->admin);
+        $user->removeAdmin();
+        $this->assertFalse($user->admin);
+    }
+
 }

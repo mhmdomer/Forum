@@ -18,6 +18,9 @@ Route::post('threads/', 'ThreadsController@store')->name('threads.store');
 Route::get('threads/{channel}/{id}', 'ThreadsController@show')->name('threads.show');
 Route::delete('threads/{channel}/{thread}', 'ThreadsController@destroy');
 
+Route::post('threads/{thread}/lock', 'LockThreadsController@lock')->name('threads.lock');
+Route::post('threads/{thread}/unlock', 'LockThreadsController@unlock')->name('threads.unlock');
+
 Route::post('/threads/{channel}/{thread}/replies/', 'RepliesController@store');
 Route::get('/threads/{channel}/{thread}/replies/', 'RepliesController@index');
 Route::post('/replies/{reply}/favorites', 'FavoritesController@store');

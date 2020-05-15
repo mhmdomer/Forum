@@ -36,6 +36,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'admin' => 'boolean',
+        'locked' => 'boolean'
     ];
 
     protected $appends = ['image'];
@@ -54,6 +56,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function latestReply() {
         return $this->replies()->latest()->first();
+    }
+
+    public function isAdmin() {
+        return $this->isAdmin;
+    }
+
+    public function makeAdmin() {
+        $this->admin = true;
+        $this->save();
+        return $this;
+    }
+
+    public function removeAdmin() {
+        $this->admin = false;
+        $this->save();
+        return $this;
     }
 
     public function getAvatarAttribute($avatar) {

@@ -22,6 +22,7 @@ class RepliesController extends Controller
     }
 
     public function store($channelId, Thread $thread) {
+        if($thread->locked) return response(['message' => 'Sorry, The Thread is locked.'], 403);
         if (Gate::denies('create', new Reply())) {
             return response(['message' => 'You are posting too frequently, take a break :)'], 422);
         }

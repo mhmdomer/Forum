@@ -34,13 +34,10 @@ export default {
             axios.post('/api/users/' + this.user.id +'/avatar', data)
                 .then(response => {
                     flash('Image Uploaded Successfully')
-                    console.log(response)
                 })
                 .catch(e => {
                     this.avatar = this.user.avatar
                     flash('error uploading', 'danger')
-                    console.log('the error is')
-                    console.log(e)
                 })
         }
     },

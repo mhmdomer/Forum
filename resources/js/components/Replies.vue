@@ -8,7 +8,10 @@
         </reply>
     </div>
     <paginator :dataSet="dataSet" @changed="getData"></paginator>
-    <add-reply @added="add"></add-reply>
+    <div v-if="locked" class="text-center">
+        This Thread is locked, You cannot post replies for it.
+    </div>
+    <add-reply v-else @added="add"></add-reply>
 
 </div>
 </template>
@@ -21,14 +24,19 @@ import Paginator from './Paginator'
 export default {
     name: "replies",
     mixins: [ collection ],
+    props: ['islocked'],
     components: { Reply, AddReply, Paginator },
     data() {
         return {
             dataSet: false,
+            locked: this.islocked,
         }
     },
     created() {
         this.getData()
+        window.events.$on('lockchanged', locked => {
+            this.locked = (locked ? true : false)
+        })
     },
     methods: {
         endpoint(page) {

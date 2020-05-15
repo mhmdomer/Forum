@@ -20,6 +20,7 @@ class CreateThreadsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->text('body');
             $table->unsignedInteger('visits')->default(0);
+            $table->boolean('locked')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
