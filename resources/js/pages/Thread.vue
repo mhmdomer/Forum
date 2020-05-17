@@ -3,11 +3,10 @@ import Replies from '../components/Replies.vue'
 import SubscribeButton from '../components/SubscribeButton.vue'
 import LockButton from '../components/LockButton.vue'
 import Favorite from '../components/Favorite.vue'
-import { VueEditor } from "vue2-editor";
 
 export default {
     name: "thread-view",
-    components: { Replies, SubscribeButton, LockButton, Favorite, VueEditor },
+    components: { Replies, SubscribeButton, LockButton, Favorite },
     props: ['thread'],
     data() {
         return {
@@ -25,9 +24,6 @@ export default {
             uri: '/threads/' + this.thread.channel.slug + '/' + this.thread.slug,
             editorToolbar: this.customToolbar,
         }
-    },
-    created() {
-        document.getElementById('wysiwyg').setAttribute('class', 'hiii')
     },
     methods: {
         save() {
@@ -56,16 +52,6 @@ export default {
                     flash(error.response.data.message, 'danger')
                 })
         },
-        toggleFavorite() {
-            if(!this.favorited) {
-                this.favorited = true
-                this.count++
-            } else {
-                this.favorited = false
-                this.count--
-
-            }
-        }
     },
 }
 </script>

@@ -22,7 +22,10 @@
             </div>
             <div class="mb-4">
                 <label for="body">Body</label>
-                <textarea type="text" name="body" class="input-field" rows="5" required>{{ old('body') }}</textarea>
+                <wysiwyg name="body"></wysiwyg>
+                {{-- <input type="hidden" id='body' name="body">
+                <trix-editor input="body"></trix-editor> --}}
+                {{-- <textarea type="text" name="body" class="input-field" rows="5" required>{{ old('body') }}</textarea> --}}
             </div>
             <div class="mb-4">
                 <button type="submit" class="button">Publish</button>

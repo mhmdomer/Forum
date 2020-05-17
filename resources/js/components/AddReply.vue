@@ -2,7 +2,7 @@
 <div>
     <div v-if="signedIn">
         <div class="mb-4">
-            <vue-editor type="textarea" v-model="body" :editorToolbar="this.customToolbar" placeholder="Add a reply"></vue-editor>
+            <wysiwyg v-model="body" name="body" :shouldClear="clear"></wysiwyg>
         </div>
         <div class="mb-4">
             <button class="button" @click="add" :disabled="disabled">Post</button>
@@ -17,16 +17,16 @@
 <script>
 import AtTa from 'vue-at/dist/vue-at-textarea'
 import mentions from '../mixins/mentions'
-import { VueEditor } from "vue2-editor";
 
 export default {
     name: "add-reply",
-    components: { AtTa, VueEditor },
+    components: { AtTa },
     mixins: [ mentions ],
     data() {
         return {
             body: '',
             disabled: false,
+            clear: false,
         }
     },
     computed: {
@@ -42,6 +42,7 @@ export default {
                 })
                 .then(response => {
                     this.body = ''
+                    this.clear = ! this.clear
                     this.$emit('added', response.data)
                     this.disabled = false
                 })

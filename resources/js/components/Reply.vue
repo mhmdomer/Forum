@@ -19,7 +19,7 @@
     </div>
     <div>
         <div v-if="!editing">
-            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body break-words mt-1" v-html="reply.body"></p>
+            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body break-words mt-" v-html="reply.body"></p>
             <div class="flex">
                 <favorite :model="this.reply" :endpoint="'/replies/' + id + '/favorites'" class="mt-2"></favorite>
                 <button v-show="!isBest && authorize('owns', reply.thread)" class="ml-auto button text-sm px-1 py-0" @click="markBest">Mark as Best</button>
@@ -27,7 +27,7 @@
         </div>
         <div v-else class>
             <div class="mt-2">
-                <vue-editor class="focus:bg-gray-300 bg-gray-300" type="textarea" v-model="reply.body" :editorToolbar="this.customToolbar"></vue-editor>
+                <wysiwyg name="body" v-model="reply.body" class="mt-4"></wysiwyg>
             </div>
             <div class="mt-2">
                 <button @click="cancel" class="rounded bg-gray-600 text-white px-3">Cancel</button>
@@ -42,12 +42,12 @@
 import AtTa from 'vue-at/dist/vue-at-textarea'
 import mentions from '../mixins/mentions'
 import moment from 'moment'
-import { VueEditor } from "vue2-editor";
+import Trix from 'trix';
 
 export default {
     name: "reply",
     components: {
-        AtTa, VueEditor
+        AtTa
     },
     props: ["data"],
     mixins: [ mentions ],

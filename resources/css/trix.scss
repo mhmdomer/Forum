@@ -4,9 +4,12 @@ pre {
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     // word-wrap: break-word;
-    word-break: keep-all;
     background-color: #444;
     @apply rounded-lg text-gray-300 p-1 my-2;
+}
+
+h1 {
+    @apply text-2xl;
 }
 
 h4 {
@@ -19,16 +22,18 @@ h2 {
     @apply text-3xl;
 }
 
-.reply .thread {
-    ul > li {
-        @apply mx-2;
-        list-style-type: circle;
-    }
+ul > li {
+    @apply mx-2;
+    list-style-type: circle;
+}
+
+.thread .reply {
 
     a {
         color: blue;
         text-decoration: underline;
     }
+
 }
 
 .body {
@@ -41,6 +46,9 @@ h2 {
     @apply leading-loose break-words;
     pre {
         word-wrap: break-word;
+    }
+    a {
+        color: blue;
     }
 }
 

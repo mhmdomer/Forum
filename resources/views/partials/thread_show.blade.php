@@ -1,11 +1,11 @@
 {{-- Editing The Thread --}}
-<div class="rounded-lg shadow bg-gray-100 mt-4 mx-2" v-if="editing" v-cloak>
+<div class="rounded-lg shadow bg-gray-100 mt-4 mx-1" v-if="editing" v-cloak>
     <div class="md:p-6 p-3">
         <article class="overflow-hidden">
             <div>
                 <input type="text" name="title" v-model="form.title" class="input-field focus:bg-gray-300 bg-gray-300">
             </div>
-            <vue-editor class="bg-gray-300 focus:bg-white mt-4" id="wysiwyg" class="mt-4" type="textarea" v-model="form.body"  :editorToolbar="this.customToolbar" name="body"></vue-editor>
+            <wysiwyg name="body" v-model="form.body" class="mt-4"></wysiwyg>
             <div class="flex mt-4">
                 <div>
                     <button class="text-md rounded-lg bg-gray-300 p-1 cursor-pointer" @click="cancel">
@@ -33,7 +33,7 @@
 
 {{-- Viewing The Thread --}}
 
-<div class="rounded-lg shadow bg-gray-100 mt-4 mx-2" v-else>
+<div class="rounded-lg shadow bg-gray-100 mt-4 mx-1" v-else>
     <div class="md:p-6 p-3">
         <article>
             <div class='text-gray-800 text-xl'>
@@ -42,9 +42,9 @@
                     <div>
                         <a  href="{{ url($thread->path()) }}">
                             @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
-                            <strong><h3>{{ $thread->title }}</h3></strong>
+                            <strong><h4 v-text="form.title"></h4></strong>
                             @else
-                            <h3>{{ $thread->title }}</h3>
+                            <h4 v-text="form.title"></h4>
                             @endif
                         </a>
                         <span class="text-sm font-semibold">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body overflow-visible break-words" v-html="body"></p>
+            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body break-words" v-html="body"></p>
             <div class="flex mt-4">
                 <div v-cloak class="ml-2">
                     <a class="text-xs bg-gray-300 text-gray-700 p-1 rounded-full" href="{{ url($thread->path()) }}"><strong>{{ number_format($thread->replies_count) }} <i class="fa fa-comment"></i></strong></a>

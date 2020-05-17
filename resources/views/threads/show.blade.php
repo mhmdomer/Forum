@@ -4,9 +4,9 @@
 <thread-view inline-template :thread="{{ $thread }}">
     <div class="container mx-auto">
         <div class="lg:flex lg:mx-12">
-            <div class="lg:w-2/3 mx-4 lg-mx-8">
+            <div class="lg:w-2/3 md:mx-4">
                 @include('partials.thread_show')
-                <h4 class="mt-4 text-xl md:ml-4">Replies:</h4>
+                <h4 class="mt-4 text-xl md:ml-4 mx-2">Replies:</h4>
                 <div class="md:mx-12 mx-2 md:mt-6 mt-2">
                     <replies
                     @deleted="repliesCount--"

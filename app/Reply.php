@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Facades\Purify;
 
 class Reply extends Model
 {
@@ -60,6 +61,10 @@ class Reply extends Model
             unset($names[$index]);
         }
         return User::whereIn('name', $names)->get();
+    }
+
+    public function getBodyAttribute($body) {
+        return Purify::clean($body);
     }
 
     public function setBodyAttribute($body) {

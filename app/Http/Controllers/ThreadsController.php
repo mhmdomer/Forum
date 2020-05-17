@@ -107,7 +107,7 @@ class ThreadsController extends Controller
         $this->authorize('update', $thread);
         $data = request()->validate([
             'title' => ["required","min:4", "max:100", new SpamFree],
-            'body' => ["required","min:4", "max:6000", new SpamFree],
+            'body' => ["required","min:4", "max:10000", new SpamFree],
         ]);
         $thread->update($data);
         return $thread;

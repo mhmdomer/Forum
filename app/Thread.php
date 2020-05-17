@@ -4,6 +4,9 @@ namespace App;
 
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Facades\Purify;
+
+// use Stevebauman\Purify\Facades\Purify;
 
 class Thread extends Model
 {
@@ -105,6 +108,10 @@ class Thread extends Model
             $slug = "{$slug}-" . $this->id;
         }
         $this->attributes['slug'] = $slug;
+    }
+
+    public function getBodyAttribute($body) {
+        return Purify::clean($body);
     }
 
     public function getRouteKeyName() {

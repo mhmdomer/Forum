@@ -4,7 +4,7 @@
 
 <div class="mx-auto">
     <div class="md:flex md:mx-12">
-        <div class="md:w-2/3 md:mx-auto sm:mx-12 mx-4">
+        <div class="md:w-2/3 md:mx-auto">
             <h1 class="text-3xl">Forum Threads</h1>
             @foreach ($threads as $thread)
             @include('partials.thread_index', $thread)
@@ -18,7 +18,7 @@
             </div>
             @endif
         </div>
-        <div class="md:w-1/3 md:mx-auto mx-4 mt-3 md:ml-6">
+        <div class="md:w-1/3 md:mx-auto mx-2 mt-3 md:ml-6">
             @if (count($trending))
             <h1 class="text-3xl">Trending Threads</h1>
             <div class="bg-gray-100 mt-1 text-indigo-500 rounded-lg p-2 pt-4 border-2">
