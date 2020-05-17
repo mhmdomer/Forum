@@ -1,0 +1,63 @@
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    // word-wrap: break-word;
+    word-break: keep-all;
+    background-color: #444;
+    @apply rounded-lg text-gray-300 p-1 my-2;
+}
+
+h4 {
+    @apply text-xl;
+}
+h3 {
+    @apply text-2xl;
+}
+h2 {
+    @apply text-3xl;
+}
+
+.reply .thread {
+    ul > li {
+        @apply mx-2;
+        list-style-type: circle;
+    }
+
+    a {
+        color: blue;
+        text-decoration: underline;
+    }
+}
+
+.body {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    // word-wrap: break-word;
+    word-break: keep-all;
+    @apply leading-loose break-words;
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+vue-text {
+    @apply leading-loose;
+}
+
+ol {
+    margin-left: 0.5em;
+    list-style: decimal;
+}
+
+blockquote {
+    border-left: 0.5em solid #bbb;
+    padding-left: 0.5em;
+}
+
+.ql-align-right {
+    direction: rtl;
+}

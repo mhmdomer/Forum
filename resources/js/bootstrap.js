@@ -23,5 +23,13 @@ window.Vue.prototype.authorize = (...params) => {
     }
     return params[0](window.App.user)
 }
+Vue.prototype.customToolbar =  [
+    [{ header: [false, 3, 4, 5] }],
+    ["bold", "italic", "underline"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["code-block", "blockquote"],
+    ["link"],
+    [{ direction: "rtl" }],
+]
 
 Vue.prototype.signedIn = window.App.signedIn

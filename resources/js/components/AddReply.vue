@@ -2,9 +2,7 @@
 <div>
     <div v-if="signedIn">
         <div class="mb-4">
-            <at-ta :members="mentions">
-                <textarea @keyup="changing(body)" type="date" rows="4" class="input-field bg-gray-300" name="body" placeholder="Have something to say ?" v-model="body"></textarea>
-            </at-ta>
+            <vue-editor type="textarea" v-model="body" :editorToolbar="this.customToolbar" placeholder="Add a reply"></vue-editor>
         </div>
         <div class="mb-4">
             <button class="button" @click="add" :disabled="disabled">Post</button>
@@ -19,9 +17,11 @@
 <script>
 import AtTa from 'vue-at/dist/vue-at-textarea'
 import mentions from '../mixins/mentions'
+import { VueEditor } from "vue2-editor";
+
 export default {
     name: "add-reply",
-    components: { AtTa },
+    components: { AtTa, VueEditor },
     mixins: [ mentions ],
     data() {
         return {

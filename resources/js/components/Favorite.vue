@@ -37,13 +37,11 @@ export default {
             this.isDisabled = true
             axios.post(this.endpoint)
                 .then(response => {
-                    console.log('success')
                     this.isDisabled = false
                 })
                 .catch(error => {
                     this.isDisabled = false
                     this.isFavorited = ! this.isFavorited
-                    console.log(error.response)
                     this.count--
                 })
             this.isFavorited = true
@@ -59,7 +57,6 @@ export default {
                     this.isDisabled = false
                     this.isFavorited = ! this.isFavorited
                     this.count++
-                    console.log(error)
                 })
             this.isFavorited = false
             this.count--

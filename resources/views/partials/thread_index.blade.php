@@ -26,9 +26,9 @@
                     </div>
                 </div>
             </div>
-            <p class="text-gray-700 md:ml-16 bg-gray-100 rounded-lg p-4">{{ $thread->body }}</p>
+            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body break-words">{!! $thread->body !!}</p>
             <div class="flex mt-4">
-                <div v-cloak class="md:ml-16 ml-2">
+                <div v-cloak class="ml-2">
                     <a class="text-xs bg-gray-300 text-gray-700 p-1 rounded-full" href="{{ url($thread->path()) }}"><strong>{{ number_format($thread->replies_count) }} <i class="fa fa-comment"></i></strong></a>
                 </div>
                 <favorite

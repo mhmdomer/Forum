@@ -1,12 +1,14 @@
 <script>
-import Replies from '../components/Replies.vue';
-import SubscribeButton from '../components/SubscribeButton.vue';
-import LockButton from '../components/LockButton.vue';
-import Favorite from '../components/Favorite.vue';
+import Replies from '../components/Replies.vue'
+import SubscribeButton from '../components/SubscribeButton.vue'
+import LockButton from '../components/LockButton.vue'
+import Favorite from '../components/Favorite.vue'
+import { VueEditor } from "vue2-editor";
+
 export default {
     name: "thread-view",
+    components: { Replies, SubscribeButton, LockButton, Favorite, VueEditor },
     props: ['thread'],
-    components: { Replies, SubscribeButton, LockButton, Favorite },
     data() {
         return {
             repliesCount: this.thread.replies_count,
@@ -21,7 +23,11 @@ export default {
             title: this.thread.title,
             body: this.thread.body,
             uri: '/threads/' + this.thread.channel.slug + '/' + this.thread.slug,
+            editorToolbar: this.customToolbar,
         }
+    },
+    created() {
+        document.getElementById('wysiwyg').setAttribute('class', 'hiii')
     },
     methods: {
         save() {
@@ -33,7 +39,6 @@ export default {
                     this.body = this.form.body
                 })
                 .catch(error => {
-                    console.log(error.response)
                     flash(error.response.data.message, 'danger')
                 })
         },

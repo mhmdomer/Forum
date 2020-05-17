@@ -1,19 +1,19 @@
 {{-- Editing The Thread --}}
-<div class="rounded-lg shadow bg-gray-100 mt-4 hover:bg-indigo-100 mx-2" v-if="editing" v-cloak>
+<div class="rounded-lg shadow bg-gray-100 mt-4 mx-2" v-if="editing" v-cloak>
     <div class="md:p-6 p-3">
         <article class="overflow-hidden">
             <div>
-                <input type="text" name="title" v-model="form.title" class="input-field bg-gray-300 ml-4">
+                <input type="text" name="title" v-model="form.title" class="input-field focus:bg-gray-300 bg-gray-300">
             </div>
-            <textarea name="body" v-model="form.body" rows="8" class="mt-4 md:ml-4 input-field bg-gray-300 focus:bg-white"></textarea>
+            <vue-editor class="bg-gray-300 focus:bg-white mt-4" id="wysiwyg" class="mt-4" type="textarea" v-model="form.body"  :editorToolbar="this.customToolbar" name="body"></vue-editor>
             <div class="flex mt-4">
-                <div class="md:ml-4 ml-2">
-                    <button class="text-sm rounded-lg bg-gray-300 p-1 cursor-pointer" @click="cancel">
+                <div>
+                    <button class="text-md rounded-lg bg-gray-300 p-1 cursor-pointer" @click="cancel">
                         Cancel
                     </button>
                 </div>
                 <div class="ml-2">
-                    <button class="text-sm rounded-lg text-green-700 bg-green-200 p-1 cursor-pointer" @click="save">
+                    <button class="text-md rounded-lg text-white bg-green-500 p-1 cursor-pointer" @click="save">
                         Save
                     </button>
                 </div>
@@ -33,7 +33,7 @@
 
 {{-- Viewing The Thread --}}
 
-<div class="rounded-lg shadow bg-gray-100 mt-4 hover:bg-indigo-100 mx-2" v-else>
+<div class="rounded-lg shadow bg-gray-100 mt-4 mx-2" v-else>
     <div class="md:p-6 p-3">
         <article>
             <div class='text-gray-800 text-xl'>
@@ -64,9 +64,9 @@
                     </div>
                 </div>
             </div>
-            <p class="text-gray-700 md:ml-16 bg-gray-100 rounded-lg p-4" v-text="body"></p>
+            <p class="text-gray-700 bg-gray-100 rounded-lg p-4 body overflow-visible break-words" v-html="body"></p>
             <div class="flex mt-4">
-                <div v-cloak class="md:ml-16 ml-2">
+                <div v-cloak class="ml-2">
                     <a class="text-xs bg-gray-300 text-gray-700 p-1 rounded-full" href="{{ url($thread->path()) }}"><strong>{{ number_format($thread->replies_count) }} <i class="fa fa-comment"></i></strong></a>
                 </div>
                 <favorite class="ml-2" :model="thread" :endpoint="'/favorite/' + 'threads/' + id"></favorite>
