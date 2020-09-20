@@ -32,6 +32,7 @@ A fully functional Forum webapp.
 1. run `npm install && npm run dev`
 1. run `composer install`
 1. copy `.env.example` to `.env` and fill in the database credentials
+1. add the email credentials to `.env` file for users email verification
 1. run `php artisan key:generate`
 1. to seed the database with dummy data run `php artisan db:seed`
 1. create a folder named `purify` under `storage` folder
