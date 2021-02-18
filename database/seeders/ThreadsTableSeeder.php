@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Channel;
 use App\Thread;
 use App\User;
@@ -35,6 +37,6 @@ class ThreadsTableSeeder extends Seeder
         foreach($chunks as $chunk) {
             Thread::insert($chunk);
         }
-        factory('App\Thread', 3)->create(['channel_id' => 1, 'user_id' => 1]);
+        factory(Thread::class, 3)->create(['channel_id' => 1, 'user_id' => 1]);
     }
 }

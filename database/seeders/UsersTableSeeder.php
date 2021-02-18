@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -15,13 +17,13 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
-        App\User::firstOrCreate([
+        User::firstOrCreate([
             'name' => 'mohammed',
             'email' => 'mohammedomer789@gmail.com',
             'password' => Hash::make('111111')
         ]);
 
-        App\User::firstOrCreate([
+        User::firstOrCreate([
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => Hash::make('111111')

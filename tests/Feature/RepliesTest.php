@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 
-class ReplyTest extends TestCase
+class RepliesTest extends TestCase
 {
 
     public function setUp() :void {

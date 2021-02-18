@@ -87,7 +87,7 @@ class ThreadsTest extends TestCase
         $this->signIn();
         $thread = create('App\Thread', ['user_id' => auth()->id()]);
         $this->patch($thread->path(), ['body' => 'new body', 'title' => 'title'])
-            ->assertStatus(302);
+            ->assertStatus(200);
     }
 
     /** @test */

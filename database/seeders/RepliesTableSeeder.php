@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Reply;
 use App\Thread;
 use App\User;

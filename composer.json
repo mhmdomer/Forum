@@ -10,21 +10,23 @@
     "require": {
         "php": "^7.2",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/helpers": "^1.1",
+        "laravel/legacy-factories": "^1.1",
         "laravel/tinker": "^2.0",
         "predis/predis": "^1.1",
         "stevebauman/purify": "^3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
+        "brianium/paratest": "^6.2",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.4",
         "laravel-frontend-presets/tailwindcss": "^4.1",
-        "laravel/ui": "^2.0",
+        "laravel/ui": "^3.0",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5"
+        "nunomaduro/collision": "^5.0",
+        "phpunit/phpunit": "^9.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -38,13 +40,13 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
         },
-        "classmap": [
-            "database/seeds",
-            "database/factories"
-        ],
-        "files" : ["tests/utilities/functions.php"]
+        "files": [
+            "tests/utilities/functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
