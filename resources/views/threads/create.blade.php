@@ -12,7 +12,7 @@
                 <select name="channel_id" class="input-field" required>
                     <option value="" selected>Select a Channel</option>
                     @foreach ($channels as $channel)
-                        <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : '' }}>{{ $channel->name }}</option>
+                    <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : '' }}>{{ $channel->name }}</option>
                     @endforeach
                 </select>
             </div>
