@@ -14,7 +14,8 @@ class ProfilesController extends Controller
     }
 
 
-    public function show(User $user) {
+    public function show(User $user)
+    {
         $activities = Activity::feed($user);
         return view('profiles.show')->with([
             'userProfile' => $user,
@@ -22,11 +23,13 @@ class ProfilesController extends Controller
         ]);
     }
 
-    public function query($query) {
+    public function query($query)
+    {
         return User::where('name', 'like', $query . '%')->select('name')->take(5)->pluck('name');
     }
 
-    public function storeAvatar() {
+    public function storeAvatar()
+    {
         request()->validate([
             'avatar' => 'image'
         ]);

@@ -3,10 +3,9 @@
 namespace App;
 
 use App\Events\ThreadReceivedNewReply;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Stevebauman\Purify\Facades\Purify;
-
-// use Stevebauman\Purify\Facades\Purify;
 
 class Thread extends Model
 {
@@ -23,20 +22,21 @@ class Thread extends Model
     protected $appends = ['isSubscribed', 'favoriteCount', 'isFavorited'];
 
     // every thread will have a replies_count attribute with it
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
-        static::addGlobalScope('replyAndFavoriteCount', function($builder) {
+        static::addGlobalScope('replyAndFavoriteCount', function (Builder $builder) {
             return $builder->withCount(['replies', 'favorites']);
         });
 
-        static::deleting(function($thread) {
-            $thread->replies->each(function($reply) {
+        static::deleting(function ($thread) {
+            $thread->replies->each(function ($reply) {
                 $reply->delete();
             });
             $thread->activity()->delete();
         });
 
-        static::created(function($thread) {
+        static::created(function ($thread) {
             $thread->update(['slug' => $thread->title]);
         });
     }
@@ -48,7 +48,7 @@ class Thread extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\Reply');
+        return $this->hasMany(Reply::class);
     }
 
     public function path()
@@ -66,56 +66,65 @@ class Thread extends Model
         return $filters->apply($query);
     }
 
-    public function favorites() {
+    public function favorites()
+    {
         return $this->morphMany(Favorite::class, 'favorited');
     }
 
-    public function subscriptions() {
+    public function subscriptions()
+    {
         return $this->hasMany(ThreadSubscription::class);
     }
 
-    public function addReply($attributes) {
+    public function addReply($attributes)
+    {
         $reply = $this->replies()->create($attributes);
         event(new ThreadReceivedNewReply($reply));
         $this->touch();
         return $reply;
     }
 
-    public function subscribe($userId = null) {
+    public function subscribe($userId = null)
+    {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
     }
 
-    public function unsubscribe($userId = null) {
+    public function unsubscribe($userId = null)
+    {
         $this->subscriptions()
             ->where('user_id', $userId ?: auth()->id())
             ->delete();
     }
 
-    public function getIsSubscribedAttribute() {
+    public function getIsSubscribedAttribute()
+    {
         return $this->subscriptions()->where('user_id', auth()->id())->exists();
     }
 
-    public function hasUpdatesFor($user = null) {
+    public function hasUpdatesFor($user = null)
+    {
         $user = $user ?: auth()->user();
         return cache($user->visitedThreadCacheKey($this)) < $this->updated_at;
     }
 
-    public function setSlugAttribute($value) {
+    public function setSlugAttribute($value)
+    {
         $slug = str_slug($value);
-        if(static::whereSlug($slug)->exists()) {
+        if (static::whereSlug($slug)->exists()) {
             $slug = "{$slug}-" . $this->id;
         }
         $this->attributes['slug'] = $slug;
     }
 
-    public function getBodyAttribute($body) {
+    public function getBodyAttribute($body)
+    {
         return Purify::clean($body);
     }
 
-    public function getRouteKeyName() {
+    public function getRouteKeyName()
+    {
         return 'slug';
     }
-
 }

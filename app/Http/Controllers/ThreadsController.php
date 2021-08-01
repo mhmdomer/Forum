@@ -26,8 +26,9 @@ class ThreadsController extends Controller
      */
     public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
+        // dd($filters);
         $threads = $this->getThreads($channel, $filters);
-        if(request()->wantsJson()) return $threads;
+        if (request()->wantsJson()) return $threads;
         return view('threads.index')->with([
             'threads' => $threads,
             'trending' => $trending->get()
@@ -53,14 +54,16 @@ class ThreadsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'title' => ["required","min:4", "max:100", new SpamFree],
-            'body' => ["required","min:4", "max:1000", new SpamFree],
+            'title' => ["required", "min:4", "max:100", new SpamFree],
+            'body' => ["required", "min:4", "max:1000", new SpamFree],
             'channel_id' => "required|exists:channels,id"
         ]);
         $thread = Thread::create(
-            array_merge($data, [
-                'user_id' => auth()->id(),
-                'slug' => str_slug($request['title'])
+            array_merge(
+                $data,
+                [
+                    'user_id' => auth()->id(),
+                    'slug' => str_slug($request['title'])
                 ]
             )
         );
@@ -106,8 +109,8 @@ class ThreadsController extends Controller
     {
         $this->authorize('update', $thread);
         $data = request()->validate([
-            'title' => ["required","min:4", "max:100", new SpamFree],
-            'body' => ["required","min:4", "max:10000", new SpamFree],
+            'title' => ["required", "min:4", "max:100", new SpamFree],
+            'body' => ["required", "min:4", "max:10000", new SpamFree],
         ]);
         $thread->update($data);
         return $thread;
@@ -127,7 +130,8 @@ class ThreadsController extends Controller
         return redirect()->route('threads.index');
     }
 
-    private function getThreads($channel = null, $filters) {
+    private function getThreads(Channel $channel = null, ThreadFilters $filters)
+    {
         $threads = Thread::latest()->filter($filters);
         if ($channel->exists) {
             $threads = $threads->where('channel_id', $channel->id);

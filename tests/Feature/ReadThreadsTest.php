@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Thread;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -48,7 +49,8 @@ class ReadThreadsTest extends TestCase
 
     /** @test */
 
-    public function user_can_filter_see_unanswered_threads() {
+    public function user_can_filter_see_unanswered_threads()
+    {
         $withoutAnswers = create('App\Thread');
         $withAnswers = create('App\Thread');
         create('App\Reply', ['thread_id' => $withAnswers->id]);
@@ -69,18 +71,19 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_filter_threads_by_popularity() {
+    public function user_can_filter_threads_by_popularity()
+    {
         $threadWithTwoReplies = create('App\Thread');
         create('App\Reply', ['thread_id' => $threadWithTwoReplies->id], 2);
         $threadWithThreeReplies = create('App\Thread');
         create('App\Reply', ['thread_id' => $threadWithThreeReplies->id], 3);
-        $threadWithNoReplies = $this->thread;
         $response = $this->getJson('/threads?popular')->json();
         $this->assertEquals([3, 2, 0], array_column($response['data'], 'replies_count'));
     }
 
     /** @test */
-    public function user_can_subscribe_and_unsubscribe_to_thread() {
+    public function user_can_subscribe_and_unsubscribe_to_thread()
+    {
         $thread = create('App\Thread');
         $user = create('App\User');
         $thread->subscribe($user->id);
@@ -90,7 +93,8 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function user_can_see_if_the_thread_has_updated() {
+    public function user_can_see_if_the_thread_has_updated()
+    {
         $this->signIn();
         $user = auth()->user();
         $this->assertTrue($this->thread->hasUpdatesFor($user));
@@ -99,12 +103,12 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    public function a_visit_is_recorded_each_time_a_thread_page_is_visited() {
+    public function a_visit_is_recorded_each_time_a_thread_page_is_visited()
+    {
         $thread = create('App\Thread');
         $this->get($thread->path());
         $this->assertEquals(1, $thread->fresh()->visits);
         $this->get($thread->path());
         $this->assertEquals(2, $thread->fresh()->visits);
     }
-
 }

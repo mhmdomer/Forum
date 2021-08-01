@@ -23,10 +23,10 @@
             <h1 class="text-3xl">Trending Threads</h1>
             <div class="bg-gray-100 mt-1 text-indigo-500 rounded-lg p-2 pt-4 border-2">
                 @foreach ($trending as $thread)
-                    <div class="mb-4 trending-thread">
-                        <a href="{{ $thread->path }}">{{ $thread->title }}</a>
-                        <hr class="mt-4 divider">
-                    </div>
+                <div class="mb-4 trending-thread">
+                    <a href="{{ $thread->path }}">{{ $thread->title }}</a>
+                    <hr class="mt-4 divider">
+                </div>
                 @endforeach
             </div>
             @endif

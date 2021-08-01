@@ -15,60 +15,71 @@ class Reply extends Model
     protected $with = ['user', 'favorites'];
     protected $appends   = ['favoriteCount', 'isFavorited', 'isBest'];
 
-    public function thread() {
+    public function thread()
+    {
         return $this->belongsTo('App\Thread');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
     }
 
-    public function activity() {
+    public function activity()
+    {
         return $this->morphMany('App\Activity', 'subject');
     }
 
-    public function path() {
+    public function path()
+    {
         return $this->thread->path() . '#reply-' . $this->id;
     }
 
-    public function wasJustPublished() {
+    public function wasJustPublished()
+    {
         return $this->created_at > now()->subSeconds(10);
     }
 
-    public function wasJustUpdated() {
+    public function wasJustUpdated()
+    {
         return $this->updated_at > now()->subSeconds(10)
             && $this->created_at < $this->updated_at;
     }
 
-    public function makeBest() {
+    public function makeBest()
+    {
         $this->thread->update(['best_reply_id' => $this->id]);
         return $this;
     }
 
-    public function isBest() {
+    public function isBest()
+    {
         return $this->thread->best_reply_id == $this->id;
     }
 
-    public function getIsBestAttribute() {
+    public function getIsBestAttribute()
+    {
         return $this->isBest();
     }
 
-    public function mentionedUsers() {
+    public function mentionedUsers()
+    {
         preg_match_all('/@([\w\-]+)/', $this->body, $matches);
         $names = array_unique($matches[1]);
         $index = array_search(auth()->user()->name, $names);
-        if($index !== false) {
+        if ($index !== false) {
             unset($names[$index]);
         }
         return User::whereIn('name', $names)->get();
     }
 
-    public function getBodyAttribute($body) {
+    public function getBodyAttribute($body)
+    {
         return Purify::clean($body);
     }
 
-    public function setBodyAttribute($body) {
+    public function setBodyAttribute($body)
+    {
         $this->attributes['body'] = preg_replace('/@([\w\-]+)/', '<a href="/profiles/$1">$0</a>', $body);
     }
-
 }
