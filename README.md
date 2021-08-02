@@ -1,3 +1,5 @@
+[![run-tests](https://github.com/mhmdomer/Forum/actions/workflows/run-tests.yml/badge.svg)](https://github.com/mhmdomer/Forum/actions/workflows/run-tests.yml)
+
 # Forum
 
 A fully functional Forum webapp.
