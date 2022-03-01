@@ -24,9 +24,6 @@ A fully functional Forum webapp.
 ---
 ![Screenshot (125)](https://user-images.githubusercontent.com/39973541/93681947-b966d880-faae-11ea-8814-a11a0fe30a48.png)
 ---
-![Screenshot (126)](https://user-images.githubusercontent.com/39973541/93681981-bc61c900-faae-11ea-8f3c-82000bcff8df.png)
-
----
 
 ## Installation guide
 
